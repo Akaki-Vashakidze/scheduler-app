@@ -20,8 +20,9 @@
         class="login_input"
       />
         </div>
+        <div *ngIf="errorMessage" style="color: red; text-align: center;">{{errorMessage}}</div>
         <div class="actions">
-            <div></div>
+        <div></div>
       <button type="submit" class="auth_buttons main_button login_bt">
         {{ 'login' | translate }}
       </button>

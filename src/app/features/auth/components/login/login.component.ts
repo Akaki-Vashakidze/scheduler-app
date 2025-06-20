@@ -16,6 +16,7 @@ export class LoginComponent {
   lang: string = 'en';
   email: string = '';
   password: string = '';
+  errorMessage:string | null = null;
 
   constructor(private translateService: TranslateService, private authService:AuthService) {}
 
@@ -25,9 +26,15 @@ export class LoginComponent {
   }
 
   onLogin() {
+    this.errorMessage = null;
     console.log('Login with:', this.email, this.password);
     this.authService.login(this.email,this.password).subscribe(item => {
       console.log(item)
+      if(item.data) {
+
+      } else {
+        this.errorMessage = item.keyword || 'Login failed';
+      }
     })
   }
 }

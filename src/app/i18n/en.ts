@@ -1,6 +1,5 @@
 export const en = {
-  LOGIN: 'Login',
-  SIGNUP: 'Sign Up',
-  SCHEDULE: 'Schedule Meeting',
-  hey:"Heyyy"
+  login: 'Login',
+  signup: 'Sign Up',
+  schedule: 'Schedule',
 };
