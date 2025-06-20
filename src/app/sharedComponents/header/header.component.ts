@@ -14,8 +14,8 @@ export class HeaderComponent {
   constructor(private translateService:TranslateService) {
 
   }
-   changeLang(lang:string) {
-    console.log(lang)
+   changeLang(event:any) {
+    let lang = event.target.value
     this.translateService.use(lang);
   }
 }

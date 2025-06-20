@@ -1,15 +1,12 @@
 <div class="header_container">
-    <div></div>
+    <div class="lang_select_cont">
+        <select (change)="changeLang($event)" class="main_select">
+            <option value="en">En</option>
+            <option value="ka">Ge</option>
+        </select>
+    </div>
     <div class="auth_cont">
         <button class="auth_buttons main_button">{{'login' | translate}}</button>
         <button class="auth_buttons main_button">{{'signUp' | translate}}</button>
-
     </div>
-<div>
-  <select class="form-select">
-    <option>Option 1</option>
-    <option>Option 2</option>
-  </select>
 </div>
-</div>
-<button (click)="changeLang(lang == 'en' ? 'ka' : 'en')" mat-raised-button>{{'hey' | translate}}</button>
