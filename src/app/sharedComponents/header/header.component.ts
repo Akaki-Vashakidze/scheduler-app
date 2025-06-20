@@ -1,20 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button'; 
+import { MatButtonModule } from '@angular/material/button';
+import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, MatButtonModule, TranslateModule],
+  imports: [CommonModule, MatButtonModule, TranslateModule, RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  lang:string = 'en'
-  constructor(private translateService:TranslateService) {
+  lang: string = 'en'
+  constructor(private translateService: TranslateService) {
 
   }
-   changeLang(event:any) {
+  changeLang(event: any) {
     let lang = event.target.value
     this.translateService.use(lang);
   }

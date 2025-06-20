@@ -9,7 +9,4 @@ export const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'password-recovery', component: PassRecoveryComponent },
   { path: 'reset-password', component: ForgetPassComponent },
-
-  // Optional: redirect to login for unknown routes
-  { path: '**', redirectTo: 'login' }
 ];
