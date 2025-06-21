@@ -106,7 +106,8 @@ export class SignupComponent {
           this.errorMessage = item.keyword || 'Login failed';
         } else {
           this.router.navigate(['dashboard'])
-          localStorage.setItem('user', item)
+          localStorage.setItem('schedule_user', JSON.stringify(item))
+          localStorage.setItem('schedule_token', item.token)
         }
       })
     } else {

@@ -30,4 +30,8 @@ export class AuthService {
     return this.http.post(`/consoleApi/auth/confirmCodeEmail`, body);
   }
 
+  logOut(){
+    return this.http.post(`/consoleApi/auth/logout`, {});
+  }
+
 }

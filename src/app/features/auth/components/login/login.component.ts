@@ -5,6 +5,7 @@ import { Route, Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent {
   password: string = '';
   errorMessage:string | null = null;
 
-  constructor(private translateService: TranslateService, private router:Router,private authService:AuthService) {}
+  constructor(private userService:UserService,private translateService: TranslateService, private router:Router,private authService:AuthService) {}
 
   changeLang(event: any) {
     const lang = event.target.value;
@@ -29,12 +30,13 @@ export class LoginComponent {
     this.errorMessage = null;
     console.log('Login with:', this.email, this.password);
     this.authService.login(this.email,this.password).subscribe(item => {
-      console.log(item)
       if(item.error) {
         this.errorMessage = item.keyword || 'Login failed';
       } else {
         this.router.navigate(['dashboard'])
-        localStorage.setItem('user',item)
+        this.userService.setUser(item)
+        localStorage.setItem('schedule_user',JSON.stringify(item))
+        localStorage.setItem('schedule_token',item.token)
       }
     })
   }

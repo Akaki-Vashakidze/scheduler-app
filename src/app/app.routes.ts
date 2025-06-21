@@ -4,6 +4,7 @@ import { SignupComponent } from './features/auth/components/signup/signup.compon
 import { PassRecoveryComponent } from './features/auth/components/pass-recovery/pass-recovery.component';
 import { ForgetPassComponent } from './features/auth/components/forget-pass/forget-pass.component';
 import { DashboardComponent } from './features/schedule/dashboard/dashboard.component';
+import { AccountInfoComponent } from './features/account/account-info/account-info.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -11,4 +12,5 @@ export const routes: Routes = [
   { path: 'password-recovery', component: PassRecoveryComponent },
   { path: 'reset-password', component: ForgetPassComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'account', component: AccountInfoComponent },
 ];

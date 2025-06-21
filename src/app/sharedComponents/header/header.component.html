@@ -5,7 +5,11 @@
             <option value="ka">Ge</option>
         </select>
     </div>
-    <div class="auth_cont">
+    <div *ngIf="user" class="login_header_actions">
+        <button routerLink="/account" class="auth_buttons main_button">{{'Account' | translate}}</button>
+        <button (click)="logOut()" class="auth_buttons main_button">{{'Log out' | translate}}</button>
+    </div>
+    <div *ngIf="!user" class="auth_cont">
         <button routerLink="/login" class="auth_buttons main_button">{{'login' | translate}}</button>
         <button routerLink="/signup" class="auth_buttons main_button">{{'signUp' | translate}}</button>
     </div>
