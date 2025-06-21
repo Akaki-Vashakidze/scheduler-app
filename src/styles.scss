@@ -47,6 +47,10 @@ body {
     color: #fff;
 }
 
+input {
+  padding: 6px 15px;
+}
+
 @media only screen and (max-width: 767px) {
     .main_button {
         background-color: var(--primary);
