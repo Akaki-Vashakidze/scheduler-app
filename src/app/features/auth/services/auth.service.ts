@@ -19,6 +19,10 @@ export class AuthService {
     return this.http.post(`/consoleApi/auth/signup`, body);
   }
 
+  checkSession(): Observable<any> {
+    return this.http.get(`/consoleApi/auth/session`);
+  }
+
   sendVerificationCode(email: string): Observable<any> {
     const body = { email };
     return this.http.post(`/consoleApi/auth/sendVerificationCodeEmail`, body);
