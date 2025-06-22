@@ -14,6 +14,10 @@ export class AuthService {
     return this.http.post(`/consoleApi/auth/login`, body);
   }
 
+  resetPassword(currentPassword:string, password: string): Observable<any> {
+    return this.http.put(`/consoleApi/auth/reset-password`, {currentPassword:currentPassword, newPassword:password });
+  }
+
   signUp(email: string, password: string, code:string): Observable<any> {
     const body = { email, password, code };
     return this.http.post(`/consoleApi/auth/signup`, body);
