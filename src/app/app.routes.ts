@@ -5,6 +5,7 @@ import { DashboardComponent } from './features/schedule/dashboard/dashboard.comp
 import { AccountInfoComponent } from './features/account/account-info/account-info.component';
 import { AuthGuard } from './features/auth/guards/auth.guard';
 import { ResetPasswordComponent } from './features/auth/components/reset-password/reset-password.component';
+import { ForgetPassComponent } from './features/auth/forget-pass/forget-pass.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -12,4 +13,5 @@ export const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'account', component: AccountInfoComponent, canActivate: [AuthGuard] },
+  { path: 'forgot-pass', component: ForgetPassComponent, },
 ];
