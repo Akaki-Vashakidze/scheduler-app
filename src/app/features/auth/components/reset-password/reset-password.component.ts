@@ -31,7 +31,7 @@ export class ResetPasswordComponent {
   onReset() {
     this.resetResponceMessages()
     if (this.password = this.password2) {
-      this.authService.resetPassword(this.currentPassword,this.password).subscribe(item => {
+      this.authService.changePassword(this.currentPassword,this.password).subscribe(item => {
         if (item.error) {
           this.errorMessage = item.keyword || 'Reset failed';
         } else {
