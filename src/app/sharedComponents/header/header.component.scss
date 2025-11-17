@@ -2,10 +2,33 @@
     background-color: var(--secondary);
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .lang_select_cont {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.users_list {
+    position: absolute;
+    padding: 10px;
+    background-color: var(--neutral);
+}
+
+.users_list_item {
+    padding: 5px;
+    border-bottom: 1px solid var(--primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 200px;
+    gap: 20px;
+}
+
+
+.users_list_item:hover{
+    border-bottom: 1px solid red;
 }

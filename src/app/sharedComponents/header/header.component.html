@@ -5,7 +5,22 @@
             <option value="ka">Ge</option>
         </select>
     </div>
+    <div class="users_search_cont">
+        <form #loginForm="ngForm" class="users_search_form">
+            <div class="inputs_cont">
+                <input type="text" name="usersSearch" (keyup)="onUsersSearchChange($event)" [(ngModel)]="usersSearch"
+                    [placeholder]="'Users' | translate" required class="users_search_input" />
+            </div>
+        </form>
+        <div class="users_list" *ngIf="users && users.length > 0">
+            <div *ngFor="let user of users" class="users_list_item">
+                <div>{{user.email}}</div>
+                <mat-icon (click)="addContact(user)" class="mat_icon">add</mat-icon>
+            </div>
+        </div>
+    </div>
     <div *ngIf="user" class="login_header_actions">
+        <button routerLink="/invitations"  class="user_invitations_button main_button">{{'invitations' | translate}}</button>
         <button routerLink="/account" class="auth_buttons main_button">{{'Account' | translate}}</button>
         <button (click)="logOut()" class="auth_buttons main_button">{{'Log out' | translate}}</button>
     </div>

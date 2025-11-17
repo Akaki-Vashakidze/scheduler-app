@@ -51,6 +51,10 @@ input {
   padding: 6px 15px;
 }
 
+.mat_icon:hover{
+    color: red;
+}
+
 @media only screen and (max-width: 767px) {
     .main_button {
         background-color: var(--primary);
@@ -70,3 +74,4 @@ input {
     color: #fff;
 }
 }
+
