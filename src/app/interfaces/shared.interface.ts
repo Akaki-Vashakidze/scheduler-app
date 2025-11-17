@@ -9,3 +9,29 @@ export interface Record {
     createdAt: string;
     state:number;
 }
+
+export interface Invitation {
+    _id: string,
+    invitee: string,
+    weekday: string,
+    inviter: string,
+    duration: number,
+    title: string,
+    time: string,
+    location: string,
+    description: string,
+    approved: number,
+    urjent: number,
+    canceled: number,
+    record: Record
+}
+
+export interface GenericResponse<T> {
+  statusCode: number;
+  result: GenericData<T>;
+}
+
+export interface GenericData<T> {
+  data: T;
+  page: any;
+}

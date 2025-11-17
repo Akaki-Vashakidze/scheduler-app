@@ -1,0 +1,42 @@
+.invitations_container {
+    width: 1050px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 20px;
+}
+
+.invitation_item {
+    width: 100%;
+    border: 1px solid var(--primary);
+    border-radius: 15px;
+}
+
+.invitation_actions {
+    float:right
+}
+
+.urjentBk{
+    border: 1.5px solid var(--danger);
+}
+
+.invitation_details {
+    padding: 10px;
+    margin: 10px;
+    border-bottom: 1px solid var(--primary);
+}
+.invitation_details_item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    flex-direction: row;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .invitations_container {
+        width: 90%;
+    }
+}
