@@ -1,14 +1,41 @@
 <div class="invitations_container">
     <h2>{{ 'my_invitations' | translate }}</h2>
-    <div class="invitation_item" *ngFor="let invitation of invitations" [ngClass]="{'urjentBk': invitation.urjent == 1}">
+
+
+    <mat-tab-group animationDuration="500ms" color="accent" backgroundColor="primary"
+        (selectedTabChange)="onTabSwitched($event)">
+
+        <mat-tab label="Pending"></mat-tab>
+        <mat-tab label="Approved"></mat-tab>
+        <mat-tab label="Declined"></mat-tab>
+        <mat-tab label="All"></mat-tab>
+
+    </mat-tab-group>
+    <div class="invitation_item" *ngFor="let invitation of invitations"
+        [ngClass]="{'urjentBk': invitation.urjent == 1}">
         <div class="invitation_details">
-            <div class="invitation_details_item"><div>{{'name' | translate}}: </div><div>{{ invitation.title }}</div></div>
-            <div class="invitation_details_item"><div>{{'description' | translate}}</div><div>{{ invitation.description }}</div></div>
-            <div class="invitation_details_item"><div>{{'created_date' | translate}}</div><div>{{ invitation.record.createdAt | date:'short' }}</div></div>
+            <div class="invitation_details_item">
+                <div>{{'name' | translate}}: </div>
+                <div>{{ invitation.title }}</div>
+            </div>
+            <div class="invitation_details_item">
+                <div>{{'description' | translate}}</div>
+                <div>{{ invitation.description }}</div>
+            </div>
+            <div class="invitation_details_item">
+                <div>{{'approved' | translate}}</div>
+                <div>{{ approvedCheck(invitation.approved) }}</div>
+            </div>
+            <div class="invitation_details_item">
+                <div>{{'created_date' | translate}}</div>
+                <div>{{ invitation.record.createdAt | date:'short' }}</div>
+            </div>
         </div>
         <div class="invitation_actions">
-            <button (click)="acceptInvitation(invitation._id)" class="main_button">{{ 'accept' | translate }}</button>
-            <button (click)="declineInvitation(invitation._id)" class="main_button">{{ 'decline' | translate }}</button>
+            <button (click)="acceptInvitation(invitation._id)" class="main_button">{{ 'accept' | translate
+                }}</button>
+            <button (click)="declineInvitation(invitation._id)" class="main_button">{{ 'decline' | translate
+                }}</button>
         </div>
     </div>
 </div>

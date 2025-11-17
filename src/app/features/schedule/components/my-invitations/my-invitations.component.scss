@@ -12,6 +12,7 @@
     width: 100%;
     border: 1px solid var(--primary);
     border-radius: 15px;
+    padding: 10px;
 }
 
 .invitation_actions {
@@ -23,8 +24,7 @@
 }
 
 .invitation_details {
-    padding: 10px;
-    margin: 10px;
+    margin: 10px 10px 0 10px;
     border-bottom: 1px solid var(--primary);
 }
 .invitation_details_item {
