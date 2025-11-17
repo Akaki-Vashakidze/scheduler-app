@@ -19,7 +19,7 @@
     float:right
 }
 
-.urjentBk{
+.urgentBk{
     border: 1.5px solid var(--danger);
 }
 
@@ -27,12 +27,26 @@
     margin: 10px 10px 0 10px;
     border-bottom: 1px solid var(--primary);
 }
+
 .invitation_details_item {
     display: flex;
     justify-content: space-between;
     padding: 5px 0;
     flex-direction: row;
     width: 100%;
+}
+
+.inputs_cont {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.invitation_urgent_cont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
 }
 
 @media screen and (max-width: 768px) {

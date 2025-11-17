@@ -21,7 +21,7 @@ export interface Invitation {
     location: string,
     description: string,
     approved: number,
-    urjent: number,
+    urgent: number,
     canceled: number,
     record: Record
 }

@@ -1,7 +1,25 @@
 <div class="invitations_container">
     <h2>{{ 'my_invitations' | translate }}</h2>
 
-
+    <div class="inputs_cont">
+        <input type="text" name="searchQuery" (keyup)="onInvitationsSearch($event)" [(ngModel)]="searchQuery"
+            [placeholder]="'Search' | translate" required class="invitations_search_input" />
+        <select (change)="onInvitationsSortChange($event)" class="invitations_sort_select main_select">
+            <option value="">{{'all' | translate}}</option>
+            <option value="monday">{{'monday' | translate}}</option>
+            <option value="tuesday">{{'tuesday' | translate}}</option>
+            <option value="wednesday">{{'wednesday' | translate}}</option>
+            <option value="thursday">{{'thursday' | translate}}</option>
+            <option value="friday">{{'friday' | translate}}</option>
+            <option value="saturday">{{'saturday' | translate}}</option>
+            <option value="sunday">{{'sunday' | translate}}</option>
+        </select>
+        <div class="invitation_urgent_cont">
+            <div>{{ 'urgent' | translate }}</div>
+            <mat-slide-toggle [checked]="false" (change)="toggleUrgent($event)">
+            </mat-slide-toggle>
+        </div>
+    </div>
     <mat-tab-group animationDuration="500ms" color="accent" backgroundColor="primary"
         (selectedTabChange)="onTabSwitched($event)">
 
@@ -12,11 +30,15 @@
 
     </mat-tab-group>
     <div class="invitation_item" *ngFor="let invitation of invitations"
-        [ngClass]="{'urjentBk': invitation.urjent == 1}">
+        [ngClass]="{'urgentBk': invitation.urgent == 1}">
         <div class="invitation_details">
             <div class="invitation_details_item">
                 <div>{{'name' | translate}}: </div>
                 <div>{{ invitation.title }}</div>
+            </div>
+            <div class="invitation_details_item">
+                <div>{{'day' | translate}}: </div>
+                <div>{{ invitation.weekday }}</div>
             </div>
             <div class="invitation_details_item">
                 <div>{{'description' | translate}}</div>
