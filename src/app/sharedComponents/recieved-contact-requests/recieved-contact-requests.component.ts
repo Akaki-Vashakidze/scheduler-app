@@ -26,7 +26,6 @@ export class RecievedContactRequestsComponent {
 
    rejectContactRequest(requestId:string){
     this.usersService.removeContactRequest(requestId).subscribe(item => {
-      console.log(item)
       if(item.statusCode == 200) {
         this.snackbarService.success('Contact request rejected')
         this.getRecievedContactRequests()
@@ -41,6 +40,7 @@ export class RecievedContactRequestsComponent {
       if(item.statusCode == 200) {
         this.snackbarService.success('Contact request accepted')
         this.getRecievedContactRequests()
+        this.usersService.contactsListUpdates()
       } else {
         this.snackbarService.error(item.errors ?? '')
       }

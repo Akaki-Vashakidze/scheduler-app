@@ -10,3 +10,9 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+.hLine {
+  width: 100%;
+  height: 20px;
+  border-bottom: 1px solid var(--primary);
+}

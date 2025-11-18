@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { UsersService } from '../../features/auth/services/users.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { Contact } from '../../interfaces/shared.interface';
@@ -7,6 +7,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SnackbarService } from '../../features/auth/services/snack-bar.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-my-contacts-list',
@@ -14,10 +15,15 @@ import { SnackbarService } from '../../features/auth/services/snack-bar.service'
   templateUrl: './my-contacts-list.component.html',
   styleUrl: './my-contacts-list.component.scss'
 })
-export class MyContactsListComponent {
+export class MyContactsListComponent implements OnDestroy {
   myContacts!:Contact[];
+  subscriptions: Subscription[] = [];
   constructor(private usersService:UsersService, private snackbarService:SnackbarService){
-    this.getContacts()
+    this.subscriptions.push(
+      usersService.contactsListUpdated.subscribe(item => {
+        this.getContacts()
+      })
+    )
   }
 
   deleteContact(contact:Contact){
@@ -39,5 +45,9 @@ export class MyContactsListComponent {
     this.usersService.getContacts().subscribe(item => {
       this.myContacts = item.result.data;
     })
+  }
+  
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }

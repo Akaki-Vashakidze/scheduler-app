@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { SentContactRequest, GenericResponse, RecievedContactRequest, Contact } from '../../../interfaces/shared.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
+  public contactsListUpdated = new BehaviorSubject<any>(null);
 
   constructor(private http: HttpClient) { }
 
   getUsers(searchQuery: string): Observable<any> {
     const body = { searchQuery };
     return this.http.post(`/consoleApi/users/list`, body);
+  }
+
+  contactsListUpdates(){
+    this.contactsListUpdated.next(true)
   }
 
   createContactRequest(contactId: string): Observable<GenericResponse<SentContactRequest>> {
