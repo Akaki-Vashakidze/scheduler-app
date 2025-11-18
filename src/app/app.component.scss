@@ -1,24 +1,10 @@
-.video-bg-container {
-  position: relative;
-  width: 100%;
-  height: 100vh; /* ან რამდენიც გინდა */
-  overflow: hidden;
+.site_content {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100%;
 }
 
-.video-bg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  transform: translate(-50%, -50%);
-  object-fit: cover;
-}
-
-.content {
-  position: relative;
-  z-index: 2;
-  color: white;
+.main_container {
+    width: 100%;
 }

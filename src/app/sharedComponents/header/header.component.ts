@@ -10,10 +10,11 @@ import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../features/auth/services/users.service';
 import { User } from '../../interfaces/shared.interface';
 import { MatIconModule } from '@angular/material/icon';
+import { SharedService } from '../../features/auth/services/shared.service';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, MatButtonModule, TranslateModule, MatIconModule,RouterModule, FormsModule],
+  imports: [CommonModule, MatButtonModule, TranslateModule, MatIconModule, RouterModule, FormsModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -25,7 +26,7 @@ export class HeaderComponent {
   users: User[] | null = null;
   private destroy$ = new Subject<void>();
 
-  constructor(private userService: UserService, private usersService: UsersService, private _router: Router, private cdr: ChangeDetectorRef, private translateService: TranslateService, private authService: AuthService) {
+  constructor(private router: Router, private sharedService: SharedService ,private userService: UserService, private usersService: UsersService, private _router: Router, private cdr: ChangeDetectorRef, private translateService: TranslateService, private authService: AuthService) {
     try {
       const storedUser = localStorage.getItem('schedule_user');
       this.user = storedUser ? JSON.parse(storedUser) : null;
@@ -53,9 +54,10 @@ export class HeaderComponent {
     }, 500);
   }
 
-  addContact(user: User) {
-    console.log('Add contact:', user);
-    
+  createContactRequest(user: User) {
+    this.usersService.createContactRequest(user._id).subscribe(response => {
+      console.log('Contact request sent:', response);
+    });
   }
 
   changeLang(event: any) {
@@ -63,16 +65,17 @@ export class HeaderComponent {
     this.translateService.use(lang);
   }
 
-  logOut() {
-    this.authService.logOut().subscribe((item: any) => {
-      if (item.result && item.result.data) {
-        this.user = null;
-        localStorage.removeItem('schedule_user')
-        localStorage.removeItem('schedule_token')
-        this._router.navigate(['/login'])
-        this.cdr.detectChanges();
-      }
-    })
+  goToAccount() {
+    this.router.navigate(['/account']);
+  }
+
+  goToInvitations() {
+    this.router.navigate(['/invitations']);
+  }
+
+  openCloseSideNav() {
+    this.sharedService.leftSideNavOpen = !this.sharedService.leftSideNavOpen;
+    this.sharedService.leftSideNavOpen$.next(this.sharedService.leftSideNavOpen);
   }
 
   ngOnDestroy() {

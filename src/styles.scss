@@ -36,6 +36,12 @@ body {
     --accent:#ffb703;
     --neutral: #f7f7f7;
     --text:#1d3557;
+    
+    --light-blue-1: #00d2ff;
+    --light-blue-2: #2edaff;
+    --light-blue-3: #50e0ff;
+    --light-blue-4: #73e7ff;
+    --light-blue-5: #9cedff;
 }
 
 .main_select {
@@ -53,6 +59,15 @@ input {
 
 .mat_icon:hover{
     color: red;
+}
+
+.page_content {
+  display: flex;
+  justify-content: center;
+}
+
+app-my-invitations, app-account-info, app-reset-password, app-login, app-register, app-forget-pass , app-schedule, app-create-invitation , app-edit-invitation , app-change-password {
+    width: 100%;
 }
 
 @media only screen and (max-width: 767px) {

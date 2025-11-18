@@ -53,4 +53,10 @@
     .invitations_container {
         width: 90%;
     }
+
+    .inputs_cont {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 }

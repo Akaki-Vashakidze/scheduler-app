@@ -35,3 +35,11 @@ export interface GenericData<T> {
   data: T;
   page: any;
 }
+
+export interface ContactRequest {
+    requester: string,
+    contact: string,
+    _id: string,
+    createdAt: string,
+    updatedAt: string,
+}

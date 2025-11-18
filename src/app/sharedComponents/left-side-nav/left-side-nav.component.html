@@ -1,0 +1,17 @@
+<div class="side_nav_content">
+    <div class="navigation">
+
+            <div *ngIf="user" class="menu_buttons" mat-menu-item routerLink="/invitations">
+                {{ 'invitations' | translate }}
+            </div>
+
+            <div *ngIf="user" class="menu_buttons"  mat-menu-item routerLink="/account">
+                {{ 'Account' | translate }}
+            </div>
+
+            <div *ngIf="user" class="menu_buttons" mat-menu-item (click)="logOut()">
+                {{ 'Log out' | translate }}
+            </div>
+
+    </div>
+</div>

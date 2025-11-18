@@ -1,10 +1,7 @@
 <div class="header_container">
-    <div class="lang_select_cont">
-        <select (change)="changeLang($event)" class="main_select">
-            <option value="en">En</option>
-            <option value="ka">Ge</option>
-        </select>
-    </div>
+
+    <mat-icon class="mat_icon side_menu_toggle_button" (click)="openCloseSideNav()">list</mat-icon>
+
     <div class="users_search_cont">
         <form #loginForm="ngForm" class="users_search_form">
             <div class="inputs_cont">
@@ -15,15 +12,18 @@
         <div class="users_list" *ngIf="users && users.length > 0">
             <div *ngFor="let user of users" class="users_list_item">
                 <div>{{user.email}}</div>
-                <mat-icon (click)="addContact(user)" class="mat_icon">add</mat-icon>
+                <mat-icon (click)="createContactRequest(user)" class="mat_icon">add</mat-icon>
             </div>
         </div>
     </div>
-    <div *ngIf="user" class="login_header_actions">
-        <button routerLink="/invitations"  class="user_invitations_button main_button">{{'invitations' | translate}}</button>
-        <button routerLink="/account" class="auth_buttons main_button">{{'Account' | translate}}</button>
-        <button (click)="logOut()" class="auth_buttons main_button">{{'Log out' | translate}}</button>
+
+    <div class="lang_select_cont">
+        <select (change)="changeLang($event)" class="main_select">
+            <option value="en">En</option>
+            <option value="ka">Ge</option>
+        </select>
     </div>
+
     <div *ngIf="!user" class="auth_cont">
         <button routerLink="/login" class="auth_buttons main_button">{{'login' | translate}}</button>
         <button routerLink="/signup" class="auth_buttons main_button">{{'signUp' | translate}}</button>

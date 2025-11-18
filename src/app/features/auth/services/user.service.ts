@@ -8,10 +8,23 @@ export class UserService {
   private userSubject = new BehaviorSubject<any>(null);
   public user$: Observable<any> = this.userSubject.asObservable();
 
+  user!: any;
   constructor() {
     const storedUser = localStorage.getItem('schedule_user');
     const parsedUser = storedUser ? JSON.parse(storedUser) : null;
     this.userSubject.next(parsedUser);
+  }
+
+  checkUser(): Observable<any> {
+    try {
+      const storedUser = localStorage.getItem('schedule_user');
+      this.user = storedUser ? JSON.parse(storedUser) : null;
+      console.log(this.user);
+    } catch (error) {
+      console.error('Failed to parse user from localStorage:', error);
+      this.user = null;
+    }
+    return this.user;
   }
 
   setUser(user: any) {
