@@ -21,7 +21,7 @@
         </div>
     </div>
     <mat-tab-group animationDuration="500ms" color="accent" backgroundColor="primary"
-        (selectedTabChange)="onTabSwitched($event)">
+        (selectedTabChange)="onTabSwitched($event.index)">
 
         <mat-tab label="Pending"></mat-tab>
         <mat-tab label="Approved"></mat-tab>

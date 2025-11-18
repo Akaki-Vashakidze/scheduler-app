@@ -70,6 +70,21 @@ app-my-invitations, app-account-info, app-reset-password, app-login, app-registe
     width: 100%;
 }
 
+.snackbar-success {
+  background-color: #4caf50 !important;
+  color: #fff !important;
+  font-weight: 500;
+  border-radius: 8px !important;
+}
+
+.snackbar-error {
+  background-color: #f44336 !important;
+  color: #fff !important;
+  font-weight: 500;
+  border-radius: 8px !important;
+}
+
+
 @media only screen and (max-width: 767px) {
     .main_button {
         background-color: var(--primary);
