@@ -17,8 +17,8 @@
                     <div>{{ request.createdAt | date:'short' }}</div>
                 </div>
                 <div class="request_data_action request_data_item">
-                    <div class="main_button">Accept</div>
-                    <div class="main_button rejectButton">Reject</div>
+                    <div class="main_button" (click)="acceptContactRequest(request._id)">Accept</div>
+                    <div class="main_button rejectButton" (click)="rejectContactRequest(request._id)">Reject</div>
                 </div>
             </div>
         </div>

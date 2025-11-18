@@ -35,4 +35,8 @@ export class UsersService {
     removeContactRequest(contactId: string): Observable<GenericResponse<SentContactRequest>> {
         return this.http.delete<GenericResponse<SentContactRequest>>(`/consoleApi/users/contact/request/${contactId}`);
     }
+
+    acceptContactRequest(requestId:string){
+        return this.http.post<GenericResponse<SentContactRequest>>(`/consoleApi/users/contact/request/accept/${requestId}`,{});
+    }
 }

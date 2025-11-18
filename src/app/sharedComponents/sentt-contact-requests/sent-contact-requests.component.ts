@@ -5,7 +5,7 @@ import { SentContactRequest } from '../../interfaces/shared.interface';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-sentt-contact-requests',
+  selector: 'app-sent-contact-requests',
   imports: [CommonModule, TranslateModule],
   templateUrl: './sent-contact-requests.component.html',
   styleUrl: './sent-contact-requests.component.scss'
