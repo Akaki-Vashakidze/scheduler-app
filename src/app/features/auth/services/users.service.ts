@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SentContactRequest, GenericResponse, RecievedContactRequest } from '../../../interfaces/shared.interface';
+import { SentContactRequest, GenericResponse, RecievedContactRequest, Contact } from '../../../interfaces/shared.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +15,9 @@ export class UsersService {
     return this.http.post(`/consoleApi/users/list`, body);
   }
 
-  createContactRequest( contactId: string): Observable<GenericResponse<SentContactRequest>> {
+  createContactRequest(contactId: string): Observable<GenericResponse<SentContactRequest>> {
     return this.http.post<GenericResponse<SentContactRequest>>(`/consoleApi/users/contact/request/${contactId}`, {});
-  }     
+  }
 
   getSentContactRequests(): Observable<GenericResponse<SentContactRequest[]>> {
     return this.http.get<GenericResponse<SentContactRequest[]>>(`/consoleApi/users/contact/requests/sent`);
@@ -27,16 +27,19 @@ export class UsersService {
     return this.http.get<GenericResponse<RecievedContactRequest[]>>(`/consoleApi/users/contact/requests/received`);
   }
 
-//   respondToContactRequest(requestId: string, accept: boolean): Observable<any> {
-//     const body = { accept };
-//     return this.http.post(`/consoleApi/users/contact/respond/${requestId}`, body);
-//   }
+  getContacts(): Observable<GenericResponse<Contact[]>> {
+    return this.http.get<GenericResponse<Contact[]>>(`/consoleApi/users/contacts`);
+  }
 
-    removeContactRequest(contactId: string): Observable<GenericResponse<SentContactRequest>> {
-        return this.http.delete<GenericResponse<SentContactRequest>>(`/consoleApi/users/contact/request/${contactId}`);
-    }
+  deleteContact(contactId: string): Observable<GenericResponse<Contact>> {
+    return this.http.delete<GenericResponse<Contact>>(`/consoleApi/users/contact/${contactId}`);
+  }
 
-    acceptContactRequest(requestId:string){
-        return this.http.post<GenericResponse<SentContactRequest>>(`/consoleApi/users/contact/request/accept/${requestId}`,{});
-    }
+  removeContactRequest(contactId: string): Observable<GenericResponse<SentContactRequest>> {
+    return this.http.delete<GenericResponse<SentContactRequest>>(`/consoleApi/users/contact/request/${contactId}`);
+  }
+
+  acceptContactRequest(requestId: string) {
+    return this.http.post<GenericResponse<SentContactRequest>>(`/consoleApi/users/contact/request/accept/${requestId}`, {});
+  }
 }

@@ -1,0 +1,12 @@
+.my_contacts {
+    border-top: 1px solid var(--primary);
+}
+
+.my_contacts_item {
+    padding: 5px 10px;
+    background-color: var(--light-blue-6);
+    border-bottom: 0.5px solid gray;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

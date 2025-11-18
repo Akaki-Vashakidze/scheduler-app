@@ -60,3 +60,11 @@ export interface RecievedContactRequest {
     createdAt: string,
     updatedAt: string,
 }
+
+export interface Contact {
+    owner:string,
+    contact: User,
+    isBlocked:number,
+    isFavorite:number,
+    _id:string
+}

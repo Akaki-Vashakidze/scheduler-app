@@ -7,10 +7,11 @@ import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { SentContactRequestsComponent } from "../sentt-contact-requests/sent-contact-requests.component";
 import { RecievedContactRequestsComponent } from "../recieved-contact-requests/recieved-contact-requests.component";
+import { MyContactsListComponent } from "../my-contacts-list/my-contacts-list.component";
 
 @Component({
   selector: 'app-left-side-nav',
-  imports: [TranslateModule, RouterLink, CommonModule, RecievedContactRequestsComponent, SentContactRequestsComponent, RecievedContactRequestsComponent],
+  imports: [TranslateModule, RouterLink, MyContactsListComponent, CommonModule, RecievedContactRequestsComponent, SentContactRequestsComponent, RecievedContactRequestsComponent, MyContactsListComponent],
   templateUrl: './left-side-nav.component.html',
   styleUrls: ['./left-side-nav.component.scss']
 })

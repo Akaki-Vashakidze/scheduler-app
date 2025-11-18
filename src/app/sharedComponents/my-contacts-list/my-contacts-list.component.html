@@ -1,0 +1,20 @@
+<div class="my_contacts">
+  <div *ngFor="let contact of myContacts" class="my_contacts_item">
+    <div>{{ contact.contact.email }}</div>
+
+      <mat-icon [matMenuTriggerFor]="contactMenu">more_vert</mat-icon>
+
+
+    <mat-menu #contactMenu="matMenu">
+      <button mat-menu-item (click)="deleteContact(contact)">
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+      </button>
+
+      <button mat-menu-item (click)="inviteContact(contact)">
+        <mat-icon>person_add</mat-icon>
+        <span>Invite</span>
+      </button>
+    </mat-menu>
+  </div>
+</div>
