@@ -1,0 +1,29 @@
+.sent_contact_requests_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid var(--primary);
+    padding-top: 20px;
+}
+
+.sent_contact_requests {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+.request_data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.request_data_item {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;   
+
+}

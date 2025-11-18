@@ -7,6 +7,7 @@
             <div class="inputs_cont">
                 <input type="text" name="usersSearch" (keyup)="onUsersSearchChange($event)" [(ngModel)]="usersSearch"
                     [placeholder]="'Users' | translate" required class="users_search_input" />
+                <mat-icon (click)="clearUsersSearch()" *ngIf="usersSearch.length != 0" class="mat_icon">close</mat-icon>
             </div>
         </form>
         <div class="users_list" *ngIf="users && users.length > 0">

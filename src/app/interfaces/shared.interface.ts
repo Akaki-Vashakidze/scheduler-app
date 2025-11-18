@@ -29,6 +29,7 @@ export interface Invitation {
 export interface GenericResponse<T> {
   statusCode: number;
   result: GenericData<T>;
+  errors?:string;
 }
 
 export interface GenericData<T> {
@@ -36,8 +37,24 @@ export interface GenericData<T> {
   page: any;
 }
 
-export interface ContactRequest {
+export interface SentContactRequest {
     requester: string,
+    contact: {
+        _id: string,
+        email: string,
+        record: Record,
+    },
+    _id: string,
+    createdAt: string,
+    updatedAt: string,
+}
+
+export interface RecievedContactRequest {
+    requester: {
+        _id: string,
+        email: string,
+        record: Record,
+    },
     contact: string,
     _id: string,
     createdAt: string,

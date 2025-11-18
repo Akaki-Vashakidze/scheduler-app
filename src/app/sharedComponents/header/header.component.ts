@@ -11,6 +11,7 @@ import { UsersService } from '../../features/auth/services/users.service';
 import { User } from '../../interfaces/shared.interface';
 import { MatIconModule } from '@angular/material/icon';
 import { SharedService } from '../../features/auth/services/shared.service';
+import { SnackbarService } from '../../features/auth/services/snack-bar.service';
 
 @Component({
   selector: 'app-header',
@@ -26,7 +27,7 @@ export class HeaderComponent {
   users: User[] | null = null;
   private destroy$ = new Subject<void>();
 
-  constructor(private router: Router, private sharedService: SharedService ,private userService: UserService, private usersService: UsersService, private _router: Router, private cdr: ChangeDetectorRef, private translateService: TranslateService, private authService: AuthService) {
+  constructor(private router: Router, private snackbarService:SnackbarService, private sharedService: SharedService ,private userService: UserService, private usersService: UsersService, private _router: Router, private cdr: ChangeDetectorRef, private translateService: TranslateService, private authService: AuthService) {
     try {
       const storedUser = localStorage.getItem('schedule_user');
       this.user = storedUser ? JSON.parse(storedUser) : null;
@@ -57,20 +58,22 @@ export class HeaderComponent {
   createContactRequest(user: User) {
     this.usersService.createContactRequest(user._id).subscribe(response => {
       console.log('Contact request sent:', response);
+      if(response.statusCode == 400) {
+        this.snackbarService.error(response.errors ?? 'Error')
+      } else if(response.statusCode == 200) {
+        this.snackbarService.success('Contact resuest sent')
+      }
     });
+  }
+
+  clearUsersSearch(){
+    this.usersSearch = '';
+    this.onUsersSearchChange('')
   }
 
   changeLang(event: any) {
     let lang = event.target.value
     this.translateService.use(lang);
-  }
-
-  goToAccount() {
-    this.router.navigate(['/account']);
-  }
-
-  goToInvitations() {
-    this.router.navigate(['/invitations']);
   }
 
   openCloseSideNav() {

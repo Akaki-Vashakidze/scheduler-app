@@ -28,6 +28,13 @@
     gap: 20px;
 }
 
+.inputs_cont {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
 
 .users_list_item:hover{
     border-bottom: 1px solid red;

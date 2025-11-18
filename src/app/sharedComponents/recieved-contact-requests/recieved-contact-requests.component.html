@@ -1,0 +1,26 @@
+<div class="recieved_contact_requests_container">
+    <h5 class="title">
+        {{ 'recieved_contact_requests' | translate }}
+    </h5>
+    <div *ngIf="recievedContacts.length === 0" class="no_recieved_contact_requests">
+        {{ 'no_recieved_contact_requests' | translate }}
+    </div>
+    <div class="recieved_contact_requests">
+        <div *ngFor="let request of recievedContacts" class="recieved_request_item">
+            <div class="request_data">
+                <div class="request_data_mail request_data_item">
+                    <div>{{'email' | translate}}:</div>
+                    <div>{{ request.requester.email }}</div>
+                </div>
+                <div class="request_data_time request_data_item">
+                    <div>{{'time' | translate}}:</div>
+                    <div>{{ request.createdAt | date:'short' }}</div>
+                </div>
+                <div class="request_data_action request_data_item">
+                    <div class="main_button">Accept</div>
+                    <div class="main_button rejectButton">Reject</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

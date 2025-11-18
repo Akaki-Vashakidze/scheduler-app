@@ -1,0 +1,22 @@
+<div class="sent_contact_requests_container">
+    <h5 class="title">
+        {{ 'sent_contact_requests' | translate }}
+    </h5>
+    <div *ngIf="sentContacts.length === 0" class="no_sent_contact_requests">
+        {{ 'no_sent_contact_requests' | translate }}
+    </div>
+    <div class="sent_contact_requests">
+        <div *ngFor="let request of sentContacts" class="sent_request_item">
+            <div class="request_data">
+                <div class="request_data_mail request_data_item">
+                    <div>{{'email' | translate}}:</div>
+                    <div>{{ request.contact.email }}</div>
+                </div>
+                <div class="request_data_time request_data_item">
+                    <div>{{'time' | translate}}:</div>
+                    <div>{{ request.createdAt | date:'short' }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

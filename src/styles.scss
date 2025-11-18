@@ -23,9 +23,18 @@ body {
     border-radius: 30px;
     margin: 10px;
     color: #fff;
+    cursor: pointer;
     box-shadow: var(--buttons-main) 0px 2px 5px 0px, var(--buttons-main) 0px 1px 1px 0px;
     // box-shadow: var(--buttons-main) 0px 0px 0px 1px, var(--buttons-main) 0px 0px 0px 1px inset;
     // box-shadow: var(--buttons-main) 0px 1px 2px 0px, var(--buttons-main) 0px 2px 6px 2px;
+}
+
+.rejectButton {
+  background-color: #de4f41;
+}
+
+mat-icon {
+  cursor: pointer!important;
 }
 
 :root {

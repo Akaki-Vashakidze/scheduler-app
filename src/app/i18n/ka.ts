@@ -8,4 +8,9 @@ export const ka = {
   name: 'სახელი',
   accept: 'მიღება',
   decline: 'უარყოფა',
+  sent_contact_requests: 'გაგზავნილი კონტაქტის მოთხოვნები',
+  no_sent_requests: 'გაგზავნილი მოთხოვნები არ არის',      
+  recieved_contact_requests: 'მიღებული კონტაქტის მოწვევები',
+  no_sent_contact_requests:'გაგზავნილი კონტაქტის მოწვევები არ არსებობს',
+  no_recieved_contact_requests:"მიღებული კონტაქტის მოწვევები არ არსებიბს"
 };
