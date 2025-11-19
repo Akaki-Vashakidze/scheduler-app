@@ -1,7 +1,8 @@
 export interface User {
     _id: string;
     record:Record;
-    email:string
+    email:string;
+    isContact:boolean;
 }
 
 export interface Record {

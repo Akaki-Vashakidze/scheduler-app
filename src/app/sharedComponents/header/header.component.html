@@ -13,7 +13,7 @@
         <div class="users_list" *ngIf="users && users.length > 0">
             <div *ngFor="let user of users" class="users_list_item">
                 <div>{{user.email}}</div>
-                <mat-icon (click)="createContactRequest(user)" class="mat_icon">add</mat-icon>
+                <mat-icon (click)="createContactRequest(user)" *ngIf="!user.isContact" class="mat_icon">add</mat-icon>
             </div>
         </div>
     </div>

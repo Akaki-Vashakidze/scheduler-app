@@ -1,11 +1,25 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ScheduleService } from '../../../auth/services/schedule.service';
 
 @Component({
   selector: 'app-contact-schedule',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './contact-schedule.component.html',
   styleUrl: './contact-schedule.component.scss'
 })
 export class ContactScheduleComponent {
 
+  userId!: string | null;
+
+  constructor(private route: ActivatedRoute,private scheduleService:ScheduleService) {}
+
+  ngOnInit() {
+    this.userId = this.route.snapshot.paramMap.get('id');
+    console.log(this.userId)
+    this.scheduleService.getUserSchedule(this.userId ?? '').subscribe(item => {
+      console.log(item)
+    })
+  }
 }
