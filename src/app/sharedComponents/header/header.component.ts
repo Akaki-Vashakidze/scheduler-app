@@ -27,7 +27,7 @@ export class HeaderComponent {
   users: User[] | null = null;
   private destroy$ = new Subject<void>();
 
-  constructor(private router: Router, private snackbarService:SnackbarService, private sharedService: SharedService ,private userService: UserService, private usersService: UsersService, private _router: Router, private cdr: ChangeDetectorRef, private translateService: TranslateService, private authService: AuthService) {
+  constructor(private router: Router, private snackbarService:SnackbarService, private sharedService: SharedService ,private userService: UserService, private usersService: UsersService, private translateService: TranslateService) {
     try {
       const storedUser = localStorage.getItem('schedule_user');
       this.user = storedUser ? JSON.parse(storedUser) : null;
@@ -57,10 +57,10 @@ export class HeaderComponent {
 
   createContactRequest(user: User) {
     this.usersService.createContactRequest(user._id).subscribe(response => {
-      console.log('Contact request sent:', response);
       if(response.statusCode == 400) {
         this.snackbarService.error(response.errors ?? 'Error')
       } else if(response.statusCode == 200) {
+        this.usersService.sentContactRequestsUpdates()
         this.snackbarService.success('Contact resuest sent')
       }
     });

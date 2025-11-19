@@ -5,10 +5,11 @@ import { UsersService } from '../../features/auth/services/users.service';
 import { RecievedContactRequest } from '../../interfaces/shared.interface';
 import { TranslateModule } from '@ngx-translate/core';
 import { SnackbarService } from '../../features/auth/services/snack-bar.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-recieved-contact-requests',
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, MatIconModule],
   templateUrl: './recieved-contact-requests.component.html',
   styleUrl: './recieved-contact-requests.component.scss'
 })

@@ -7,6 +7,7 @@ import { AuthGuard } from './features/auth/guards/auth.guard';
 import { ResetPasswordComponent } from './features/auth/components/reset-password/reset-password.component';
 import { ForgetPassComponent } from './features/auth/components/forget-pass/forget-pass.component';
 import { MyInvitationsComponent } from './features/schedule/components/my-invitations/my-invitations.component';
+import { ContactScheduleComponent } from './features/schedule/components/contact-schedule/contact-schedule.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -16,4 +17,5 @@ export const routes: Routes = [
   { path: 'account', component: AccountInfoComponent, canActivate: [AuthGuard] },
   { path: 'forgot-pass', component: ForgetPassComponent },
   { path: 'invitations', component: MyInvitationsComponent , canActivate: [AuthGuard] },
+  { path: 'contact/schedule/:id', component: ContactScheduleComponent , canActivate: [AuthGuard] },
 ];

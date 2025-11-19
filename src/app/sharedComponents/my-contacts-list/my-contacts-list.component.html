@@ -12,6 +12,11 @@
         <span>Delete</span>
       </button>
 
+    <button mat-menu-item [routerLink]="'contact/schedule/' + contact._id">
+        <mat-icon>event</mat-icon>
+        <span>Schedule</span>
+      </button>
+
       <button mat-menu-item (click)="inviteContact(contact)">
         <mat-icon>person_add</mat-icon>
         <span>Invite</span>

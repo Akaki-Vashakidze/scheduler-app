@@ -8,6 +8,7 @@ import { SentContactRequest, GenericResponse, RecievedContactRequest, Contact } 
 })
 export class UsersService {
   public contactsListUpdated = new BehaviorSubject<any>(null);
+  public sentContactRequestsUpdated = new BehaviorSubject<any>(null);
 
   constructor(private http: HttpClient) { }
 
@@ -18,6 +19,10 @@ export class UsersService {
 
   contactsListUpdates(){
     this.contactsListUpdated.next(true)
+  }
+
+  sentContactRequestsUpdates(){
+    this.sentContactRequestsUpdated.next(true)
   }
 
   createContactRequest(contactId: string): Observable<GenericResponse<SentContactRequest>> {
