@@ -1,27 +1,11 @@
 <div class="calendar_container">
   <div class="calendar_day-item" *ngFor="let day of calendarDays">
-      
-    <div class="calendar_day-item-header">
-      {{ day.weekday }} - {{ day.date }}
-    </div>
-
+    <div class="calendar_day-item-header">{{ day.weekday }} {{ day.date }} {{ day.month }}</div>
     <div class="calendar_day-item-timeLine">
-      <div 
-        class="time_slot"
-        *ngFor="let hour of getHoursForDay(day)"
-        [ngClass]="{ 'busy': hour.busy }"
-      >
-        {{ hour.label }}
-      </div>
-
-      <div 
-        class="event_block"
-        *ngFor="let ev of day.events"
-      >
-        <div class="event_time">{{ev.start}} - {{ev.end}}</div>
-        <div class="event_title">{{ev.title}}</div>
+      <div *ngFor="let slot of day.timeline" 
+           [ngClass]="{'event-slot': slot.event, 'empty-slot': !slot.event}">
+        <span>{{ slot.time }} <ng-container *ngIf="slot.event">- {{ slot.event.title }}</ng-container></span>
       </div>
     </div>
-
   </div>
 </div>

@@ -1,56 +1,56 @@
-
-
 .calendar_container {
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 10px;
+  font-family: Arial, sans-serif;
 }
 
 .calendar_day-item {
-  width: 130px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 8px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 10px;
+  width: 220px; /* adjust width as needed */
 }
 
 .calendar_day-item-header {
   font-weight: bold;
-  margin-bottom: 8px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #333;
   text-align: center;
 }
 
 .calendar_day-item-timeLine {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
 }
 
-.time_slot {
-  padding: 4px;
+.calendar_day-item-timeLine div {
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+  transition: background-color 0.2s ease;
+}
+
+.empty-slot {
+  background-color: #fff;
   border: 1px solid #eee;
-  border-radius: 4px;
-  text-align: center;
-  background: #fafafa;
 }
 
-.time_slot.busy {
-  background: #ffdddd;
-  border-color: #ff9e9e;
-  font-weight: 600;
+.event-slot {
+  background-color: #a2d5f2; /* light blue for events */
+  border: 1px solid #4ca1d9;
+  color: #000;
+  font-weight: 500;
 }
 
-.event_block {
-  margin-top: 10px;
-  padding: 6px;
-  background: #ffe9c7;
-  border: 1px solid #ffc48c;
-  border-radius: 4px;
-}
-
-.event_time {
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.event_title {
-  font-size: 12px;
+/* Optional: hover effect to see details */
+.event-slot:hover {
+  background-color: #4ca1d9;
+  color: #fff;
+  cursor: pointer;
 }

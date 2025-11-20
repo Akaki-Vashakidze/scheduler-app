@@ -40,6 +40,36 @@ ngOnInit() {
   }
 }
 
+generateTimeline(day: any) {
+  const timeline: string[] = [];
+
+  // 1. Add hours from 6:00 to 24:00
+  for (let hour = 6; hour <= 24; hour++) {
+    timeline.push(`${hour.toString().padStart(2, '0')}:00`);
+  }
+
+  // 2. Add event start/end times if they are not on the hour
+  if (day.events) {
+    day.events.forEach((ev:any) => {
+      if (!timeline.includes(ev.start)) timeline.push(ev.start);
+      if (!timeline.includes(ev.end)) timeline.push(ev.end);
+    });
+  }
+
+  // 3. Sort timeline
+  timeline.sort((a, b) => {
+    const [ah, am] = a.split(':').map(Number);
+    const [bh, bm] = b.split(':').map(Number);
+    return ah * 60 + am - (bh * 60 + bm);
+  });
+
+  return timeline.map(time => ({
+    time,
+    event: day.events.find((ev:any) => time >= ev.start && time < ev.end) || null
+  }));
+}
+
+
 generateDays() {
   const today = new Date();
   const daysInMonth = 30;
@@ -64,9 +94,14 @@ generateDays() {
 mergeDaysWithEvents(days: any[], events: any[]) {
   return days.map(day => {
     const matchedEvents = events.filter(ev => ev.weekday === day.weekday);
-    return { ...day, events: matchedEvents };
+    return {
+      ...day,
+      events: matchedEvents,
+      timeline: this.generateTimeline({ ...day, events: matchedEvents })
+    };
   });
 }
+
 
 getHoursForDay(day: any) {
   let hours = [];
@@ -89,5 +124,15 @@ getHoursForDay(day: any) {
   return hours;
 }
 
-
+generateTimeSlots(startHour = 6, endHour = 24, intervalMinutes = 5) {
+  const slots: string[] = [];
+  for (let hour = startHour; hour < endHour; hour++) {
+    for (let min = 0; min < 60; min += intervalMinutes) {
+      const hh = hour.toString().padStart(2, '0');
+      const mm = min.toString().padStart(2, '0');
+      slots.push(`${hh}:${mm}`);
+    }
+  }
+  return slots;
+}
 }

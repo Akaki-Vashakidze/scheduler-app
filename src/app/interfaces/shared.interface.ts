@@ -74,6 +74,7 @@ export interface CalendarDay {
     weekday: string,
     date: number,
     month: string,
-    fullDate: Date
-    events:Invitation[]
+    fullDate: Date,
+    events:Invitation[],
+    timeline:any;
 }
