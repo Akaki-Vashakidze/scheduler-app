@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { GenericResponse, Invitation, SentContactRequest } from '../../../interfaces/shared.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +9,7 @@ import { Injectable } from '@angular/core';
 export class ScheduleService {
       constructor(private http: HttpClient) { }
 
-      getUserSchedule(userId:string){
-        return this.http.get(`/consoleApi/schedule/${userId}`)
+      getUserSchedule(userId:string): Observable<GenericResponse<Invitation[]>>{
+        return this.http.get<GenericResponse<Invitation[]>>(`/consoleApi/schedule/${userId}`)
       }
 }

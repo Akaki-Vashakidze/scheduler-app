@@ -15,15 +15,15 @@
 
     </div>
 
-    <div class="recieved_contact_requests">
+    <div class="recieved_contact_requests" *ngIf="user">
         <app-sent-contact-requests></app-sent-contact-requests>
     </div>
 
-    <div class="sent_contact_requests">
+    <div class="sent_contact_requests" *ngIf="user">
         <app-recieved-contact-requests></app-recieved-contact-requests>
     </div>
     
-    <div class="my_contacts">
+    <div class="my_contacts" *ngIf="user">
         <app-my-contacts-list></app-my-contacts-list>
     </div>
 </div>

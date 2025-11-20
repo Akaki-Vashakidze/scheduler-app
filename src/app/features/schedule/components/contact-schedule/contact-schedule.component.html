@@ -1,1 +1,27 @@
-<p>contact-schedule works!</p>
+<div class="calendar_container">
+  <div class="calendar_day-item" *ngFor="let day of calendarDays">
+      
+    <div class="calendar_day-item-header">
+      {{ day.weekday }} - {{ day.date }}
+    </div>
+
+    <div class="calendar_day-item-timeLine">
+      <div 
+        class="time_slot"
+        *ngFor="let hour of getHoursForDay(day)"
+        [ngClass]="{ 'busy': hour.busy }"
+      >
+        {{ hour.label }}
+      </div>
+
+      <div 
+        class="event_block"
+        *ngFor="let ev of day.events"
+      >
+        <div class="event_time">{{ev.start}} - {{ev.end}}</div>
+        <div class="event_title">{{ev.title}}</div>
+      </div>
+    </div>
+
+  </div>
+</div>

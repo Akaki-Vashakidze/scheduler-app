@@ -16,9 +16,9 @@ export interface Invitation {
     invitee: string,
     weekday: string,
     inviter: string,
-    duration: number,
+    end: string,
     title: string,
-    time: string,
+    start: string,
     location: string,
     description: string,
     approved: number,
@@ -68,4 +68,12 @@ export interface Contact {
     isBlocked:number,
     isFavorite:number,
     _id:string
+}
+
+export interface CalendarDay {
+    weekday: string,
+    date: number,
+    month: string,
+    fullDate: Date
+    events:Invitation[]
 }

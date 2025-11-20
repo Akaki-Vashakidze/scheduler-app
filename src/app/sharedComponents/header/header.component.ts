@@ -77,8 +77,7 @@ export class HeaderComponent {
   }
 
   openCloseSideNav() {
-    this.sharedService.leftSideNavOpen = !this.sharedService.leftSideNavOpen;
-    this.sharedService.leftSideNavOpen$.next(this.sharedService.leftSideNavOpen);
+    this.sharedService.leftSideNavOpen == true ? this.sharedService.closeSideNav() : this.sharedService.openSideNav();
   }
 
   ngOnDestroy() {

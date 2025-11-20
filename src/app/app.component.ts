@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnDestroy {
-  sideNavOpen: boolean = true;
+  sideNavOpen: boolean = false;
   subscriptions: Subscription[] = [];
   constructor(private translate: TranslateService, private sharedService: SharedService) {
     this.translate.setTranslation('en', en);
