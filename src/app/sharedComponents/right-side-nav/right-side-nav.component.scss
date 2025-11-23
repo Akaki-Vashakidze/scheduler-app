@@ -2,7 +2,7 @@
     position: fixed;
     display: flex;
     flex-direction: column;
-    gap: 20px;  
+    gap: 20px;
     width: 300px;
     background-color: var(--secondary);
     height: 100vh;
@@ -18,4 +18,43 @@
     display: flex;
     justify-content: space-between;
     padding: 10px;
+}
+
+.selectedScheduleItem {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    border-bottom: 1px solid green;
+    padding: 10px 0px;
+}
+
+.selectedScheduleItemPart2 {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+}
+
+.selectedScheduleDay {
+    background-color: #d0ead0;
+    padding: 2px 10px;
+    border-radius: 20px;
+}
+
+.selectedSchedule {
+    padding: 5px 10px;
+}
+
+.selectedScheduleEveryDayCheck {
+    display: flex;
+    justify-content: row;
+    align-items: center;
+    gap: 5px;
+}
+
+.selectedScheduleEveryDayCheckBox {
+    width: 20px;
+    height: 20px;
+    accent-color: #d0ead0;
 }

@@ -1,13 +1,30 @@
 <div class="right_side_nav_content">
-    <div class="right_side_nav_content_header">
-        <mat-icon (click)="closeRightNav()">close</mat-icon>
-        <div></div>
-    </div>
-    <div class="right_side_nav_content_body">
-        <div *ngIf="selectedSchedule" class="selectedSchedule">
-            <div class="selectedScheduleItem" *ngFor="let item = selectedSchedule">
-                {{item.day}}
-            </div>
+  <div class="right_side_nav_content_header">
+    <mat-icon (click)="closeRightNav()">close</mat-icon>
+    <div></div>
+  </div>
+
+  <div class="right_side_nav_content_body" *ngIf="selectedSchedule">
+    <div class="selectedSchedule">
+      <div class="selectedScheduleItem" *ngFor="let item of selectedSchedule; let i = index">
+        <div class="selectedScheduleDate">{{ item.date | date: 'dd MMM yyyy' }}</div>
+        <div class="selectedScheduleItemPart2">
+          <div class="selectedScheduleDay">{{ item.day }}</div>
+          <div class="selectedScheduleTime">{{ (item.start ?? '?') + ' - ' + (item.end ?? '?') }}</div>
         </div>
+        <label class="selectedScheduleEveryDayCheck">
+          <input type="checkbox"
+                 [checked]="item.isChecked"
+                 (change)="onCheckboxChange($event, i)"
+                 class="selectedScheduleEveryDayCheckBox" />
+          <span>
+            <span>{{ 'Every ' | translate }}</span>
+            <span>{{ item.day }}</span>
+          </span>
+        </label>
+      </div>
     </div>
+
+    <div class="main_button" (click)="submit()">Send Request</div>
+  </div>
 </div>

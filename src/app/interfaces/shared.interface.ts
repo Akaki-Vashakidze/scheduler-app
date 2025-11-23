@@ -82,6 +82,7 @@ export interface CalendarDay {
 export interface SelectedSchedule {
     day: string,
     date: string,
-    start: string,
-    end: string
+    start?: string,
+    end?: string,
+    isChecked?:boolean
 }

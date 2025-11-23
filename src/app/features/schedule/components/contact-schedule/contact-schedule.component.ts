@@ -22,7 +22,7 @@ export class ContactScheduleComponent implements OnInit {
   startTimeOrEndTime: string = 'start';
   selectedItems: any = [];
 
-  constructor(private route: ActivatedRoute, private sharedService:SharedService, private sideNavService:SideNavsService, private scheduleService: ScheduleService) {}
+  constructor(private route: ActivatedRoute, private sharedService: SharedService, private sideNavService: SideNavsService, private scheduleService: ScheduleService) { }
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('id');
@@ -203,7 +203,7 @@ export class ContactScheduleComponent implements OnInit {
         slot.selected = inRange;
         // main slot isStart/isEnd if its time or its miniSlots contain the start/end
         slot.isStart = slot.time === startTime || (Array.isArray(slot.miniSlots) && slot.miniSlots.some((m: any) => m.time === startTime));
-        slot.isEnd   = slot.time === endTime   || (Array.isArray(slot.miniSlots) && slot.miniSlots.some((m: any) => m.time === endTime));
+        slot.isEnd = slot.time === endTime || (Array.isArray(slot.miniSlots) && slot.miniSlots.some((m: any) => m.time === endTime));
 
         if (Array.isArray(slot.miniSlots)) {
           slot.miniSlots.forEach((m: any) => {
@@ -249,9 +249,10 @@ export class ContactScheduleComponent implements OnInit {
     this.startTimeOrEndTime = 'start';
     console.log(`All slots reset for ${day.weekday}, ${day.date}`, day);
     console.log(this.selectedItems)
-    if(this.selectedItems.length == 0) {
+    if (this.selectedItems.length == 0) {
       this.sideNavService.closeRightSideNav()
     }
+    this.sharedService.setRightSideNavContent(this.selectedItems)
   }
 
   compareTimes(a: string, b: string): number {

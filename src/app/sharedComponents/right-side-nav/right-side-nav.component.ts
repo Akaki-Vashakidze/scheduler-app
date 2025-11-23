@@ -12,47 +12,60 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-right-side-nav',
+  standalone: true,
   imports: [TranslateModule, CommonModule, MatIcon],
   templateUrl: './right-side-nav.component.html',
   styleUrls: ['./right-side-nav.component.scss']
 })
 export class RightSideNavComponent implements OnDestroy {
-  user!: any;
-  selectedSchedule!:SelectedSchedule[];
+  selectedSchedule!: SelectedSchedule[];
   private destroy$ = new Subject<void>();
-  constructor(private authService: AuthService, private sharedService:SharedService,private sideNavService: SideNavsService ,private _router: Router, private userService: UserService, private cdr: ChangeDetectorRef) {
-    this.userService.user$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(item => {
-        this.user = item;
-      });
 
-      this.sharedService.rightSideNavChosenSchedulHelper$
+  constructor(
+    private sharedService: SharedService,
+    private sideNavService: SideNavsService
+  ) {
+    this.sharedService.rightSideNavChosenSchedulHelper$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(item => {
-        this.selectedSchedule = item;
-        console.log(this.selectedSchedule)
+      .subscribe(newItems => {
+        const oldItems = this.selectedSchedule || [];
+
+        // Merge new items with old ones to preserve isChecked
+        this.selectedSchedule = (newItems || []).map((newItem: any) => {
+          // Try to find old item by unique property (e.g., day + date)
+          const oldItem = oldItems.find(i => i.day === newItem.day && i.date === newItem.date);
+          return {
+            ...newItem,
+            isChecked: oldItem ? oldItem.isChecked : false
+          };
+        });
       });
   }
-  logOut() {
-    this.authService.logOut().subscribe((item: any) => {
-      if (item.result && item.result.data) {  
-        this.userService.setUser(null)
-        this.user = null;
-        localStorage.removeItem('schedule_user')
-        localStorage.removeItem('schedule_token')
-        this._router.navigate(['/login'])
-        this.cdr.detectChanges();
-      }
-    })
+
+  onCheckboxChange(event: Event, index: number): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+
+    // Update isChecked property
+    this.selectedSchedule[index] = {
+      ...this.selectedSchedule[index],
+      isChecked
+    };
+
+    console.log(this.selectedSchedule);
+  }
+
+
+  submit(): void {
+    const checkedItems = this.selectedSchedule.filter(i => i.isChecked);
+    console.log(this.selectedSchedule);
+  }
+
+  closeRightNav(): void {
+    this.sideNavService.closeRightSideNav();
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  closeRightNav(){
-    this.sideNavService.closeRightSideNav()
   }
 }
