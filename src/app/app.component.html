@@ -1,8 +1,11 @@
 <div class="main_container">
-<app-header></app-header>
-<div class="site_content">
-    <app-left-side-nav *ngIf="sideNavOpen"></app-left-side-nav>
-    <router-outlet></router-outlet>
-</div>
-<app-loader></app-loader>
+    <app-header></app-header>
+    <div class="content_contaier" [ngClass]="sizeContentContainerFromSideNavs()">
+        <div class="site_content" [ngClass]="sizeSiteFromSideNavs()">
+            <app-left-side-nav *ngIf="leftSideNavOpen"></app-left-side-nav>
+            <app-right-side-nav *ngIf="rightSideNavOpen"></app-right-side-nav>
+            <router-outlet></router-outlet>
+        </div>
+        <app-loader></app-loader>
+    </div>
 </div>

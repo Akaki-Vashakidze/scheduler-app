@@ -8,3 +8,28 @@
 .main_container {
     width: 100%;
 }
+
+.content_contaier {
+    display: flex;
+    justify-content: center;
+}
+
+.oneNavOpenSite {
+    width: calc(100% - 300px);
+}
+
+.bothNavsOpenSite {
+    width: calc(100% - 600px);
+}
+
+.rightNavOpenContent {
+    justify-content: left;
+}
+
+.leftNavOpenContent {
+    justify-content: right;
+}
+
+.bothNavsOpenContent {
+    justify-content: center;
+}

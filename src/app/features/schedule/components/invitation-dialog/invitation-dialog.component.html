@@ -1,0 +1,10 @@
+    <h2 mat-dialog-title>Slot Details</h2>
+    <mat-dialog-content>
+      <p>Start Time: {{data.startTime}}</p>
+      <p>End Time: {{data.end}}</p>
+      <p>Title: {{data.title}}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button (click)="close()">Close</button>
+      <button mat-button color="primary" (click)="confirm()">Confirm</button>
+    </mat-dialog-actions>

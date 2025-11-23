@@ -11,14 +11,13 @@
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   padding: 10px;
-  width: 220px; /* adjust width as needed */
+  width: 220px;
 }
 
 .calendar_day-item-header {
   font-weight: bold;
   font-size: 16px;
   margin-bottom: 10px;
-  color: #333;
   text-align: center;
 }
 
@@ -28,29 +27,50 @@
   gap: 4px;
 }
 
-.calendar_day-item-timeLine div {
-  padding: 6px 10px;
-  border-radius: 4px;
+.slot {
+  display: flex;
+  justify-content: space-between;
   font-size: 14px;
-  color: #333;
-  transition: background-color 0.2s ease;
-}
-
-.empty-slot {
-  background-color: #fff;
+  border-radius: 10px;
   border: 1px solid #eee;
-}
-
-.event-slot {
-  background-color: #a2d5f2; /* light blue for events */
-  border: 1px solid #4ca1d9;
-  color: #000;
-  font-weight: 500;
-}
-
-/* Optional: hover effect to see details */
-.event-slot:hover {
-  background-color: #4ca1d9;
-  color: #fff;
+  color: #333;
   cursor: pointer;
+  transition: background-color 0.2s;
 }
+
+.padding6 { padding: 6px 10px; }
+
+.cancel_time {
+  background-color: var(--danger);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.empty-slot { background-color: #fff; }
+.event-slot { background-color: #a2d5f2; border: 1px solid #4ca1d9; }
+.ended-slot { background-color: #8bc34a; border: 1px solid #558b2f; color: #fff; }
+
+.mini-slots-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-left: 10px;
+  margin-top: 4px;
+}
+
+.mini-slot {
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s;
+}
+
+.mini-slot:hover { background-color: #c6e2ff; }
+
+/* Colors for Start / End / Between */
+.start-slot, .mini-start { background-color: #42a5f5; color: white; }
+.end-slot, .mini-end { background-color: #1976d2; color: white; }
+.selected-slot, .mini-between { background-color: #90caf9; color: black; }

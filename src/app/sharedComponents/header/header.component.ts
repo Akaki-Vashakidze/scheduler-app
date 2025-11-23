@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { AuthService } from '../../features/auth/services/auth.service';
 import { UserService } from '../../features/auth/services/user.service';
 import { Subject, takeUntil } from 'rxjs';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +11,7 @@ import { User } from '../../interfaces/shared.interface';
 import { MatIconModule } from '@angular/material/icon';
 import { SharedService } from '../../features/auth/services/shared.service';
 import { SnackbarService } from '../../features/auth/services/snack-bar.service';
+import { SideNavsService } from '../../features/auth/services/side-navs.service';
 
 @Component({
   selector: 'app-header',
@@ -27,7 +27,7 @@ export class HeaderComponent {
   users: User[] | null = null;
   private destroy$ = new Subject<void>();
 
-  constructor(private router: Router, private snackbarService:SnackbarService, private sharedService: SharedService ,private userService: UserService, private usersService: UsersService, private translateService: TranslateService) {
+  constructor(private router: Router, private snackbarService:SnackbarService, private sharedService: SharedService, private sideNavsService:SideNavsService ,private userService: UserService, private usersService: UsersService, private translateService: TranslateService) {
     try {
       const storedUser = localStorage.getItem('schedule_user');
       this.user = storedUser ? JSON.parse(storedUser) : null;
@@ -77,11 +77,15 @@ export class HeaderComponent {
   }
 
   openCloseSideNav() {
-    this.sharedService.leftSideNavOpen == true ? this.sharedService.closeSideNav() : this.sharedService.openSideNav();
+    this.sideNavsService.leftSideNavOpen == true ? this.sideNavsService.closeLeftSideNav() : this.sideNavsService.openLeftSideNav();
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  toggleRightNav(){
+    this.sideNavsService.rightSideNavOpen == true ? this.sideNavsService.closeRightSideNav() : this.sideNavsService.openRightSideNav();
   }
 }

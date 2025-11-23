@@ -1,11 +1,61 @@
 <div class="calendar_container">
   <div class="calendar_day-item" *ngFor="let day of calendarDays">
-    <div class="calendar_day-item-header">{{ day.weekday }} {{ day.date }} {{ day.month }}</div>
+    <!-- Day Header -->
+    <div class="calendar_day-item-header">
+      {{ day.weekday }} {{ day.date }} {{ day.month }}
+    </div>
+
+    <!-- Timeline -->
     <div class="calendar_day-item-timeLine">
-      <div *ngFor="let slot of day.timeline" 
-           [ngClass]="{'event-slot': slot.event, 'empty-slot': !slot.event}">
-        <span>{{ slot.time }} <ng-container *ngIf="slot.event">- {{ slot.event.title }}</ng-container></span>
-      </div>
+      <ng-container *ngFor="let slot of day.timeline; let i = index">
+        <!-- Main Slot -->
+        <div
+          class="slot"
+          (click)="chooseTime(slot, day.timeline[i+1], day)"
+          [ngClass]="{
+            'event-slot': slot.event,
+            'empty-slot': !slot.event && !slot.justEnded,
+            'ended-slot': slot.justEnded,
+            'selected-slot': slot.selected && !slot.isStart && !slot.isEnd,
+            'start-slot': slot.isStart,
+            'end-slot': slot.isEnd
+          }"
+          [style.background-color]="
+            slot.isStart ? '#42a5f5' :
+            slot.isEnd ? '#1976d2' :
+            (slot.selected ? '#90caf9' : '')
+          "
+        >
+          <span class="padding6">
+            {{ slot.time }}
+            <ng-container *ngIf="slot.event"> - {{ slot.event.title }}</ng-container>
+          </span>
+
+          <div *ngIf="slot.selected" class="padding6 cancel_time" (click)="cancelChosenSlots(day)">X</div>
+        </div>
+
+        <!-- Mini Slots -->
+        <div *ngIf="slot.showMiniSlots" class="mini-slots-container">
+          <div
+            *ngFor="let mini of slot.miniSlots"
+            class="mini-slot"
+            [ngClass]="{
+              'mini-selected': mini.selected && !mini.isStart && !mini.isEnd,
+              'mini-start': mini.isStart,
+              'mini-end': mini.isEnd,
+              'mini-between': mini.isBetween
+            }"
+            [style.background-color]="
+              mini.isStart ? '#42a5f5' :
+              mini.isEnd ? '#1976d2' :
+              (mini.isBetween ? '#90caf9' : '')
+            "
+            (click)="selectMiniSlot(slot, mini, $event, day)"
+          >
+            {{ mini.time }}
+          </div>
+        </div>
+      </ng-container>
     </div>
   </div>
 </div>

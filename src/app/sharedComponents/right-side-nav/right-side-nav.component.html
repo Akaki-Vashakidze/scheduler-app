@@ -1,0 +1,13 @@
+<div class="right_side_nav_content">
+    <div class="right_side_nav_content_header">
+        <mat-icon (click)="closeRightNav()">close</mat-icon>
+        <div></div>
+    </div>
+    <div class="right_side_nav_content_body">
+        <div *ngIf="selectedSchedule" class="selectedSchedule">
+            <div class="selectedScheduleItem" *ngFor="let item = selectedSchedule">
+                {{item.day}}
+            </div>
+        </div>
+    </div>
+</div>

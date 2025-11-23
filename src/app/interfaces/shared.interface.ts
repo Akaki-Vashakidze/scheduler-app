@@ -78,3 +78,10 @@ export interface CalendarDay {
     events:Invitation[],
     timeline:any;
 }
+
+export interface SelectedSchedule {
+    day: string,
+    date: string,
+    start: string,
+    end: string
+}
