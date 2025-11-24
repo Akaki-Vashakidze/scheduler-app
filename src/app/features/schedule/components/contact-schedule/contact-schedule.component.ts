@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ScheduleService } from '../../../auth/services/schedule.service';
-import { CalendarDay, Invitation } from '../../../../interfaces/shared.interface';
+import { CalendarDay, Invitation, SelectedSchedule } from '../../../../interfaces/shared.interface';
 import { SideNavsService } from '../../../auth/services/side-navs.service';
 import { SharedService } from '../../../auth/services/shared.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-contact-schedule',
@@ -13,25 +14,29 @@ import { SharedService } from '../../../auth/services/shared.service';
   templateUrl: './contact-schedule.component.html',
   styleUrls: ['./contact-schedule.component.scss']
 })
-export class ContactScheduleComponent implements OnInit {
+export class ContactScheduleComponent implements OnInit, OnDestroy {
   userId!: string | null;
   daysArray: any[] = [];
   calendarDays!: CalendarDay[];
   userSchedule!: Invitation[];
   selectedStartTime: any;
   startTimeOrEndTime: string = 'start';
-  selectedItems: any = [];
+  selectedItems: SelectedSchedule[] = [];
+  subscriptions: Subscription[] = []
 
   constructor(private route: ActivatedRoute, private sharedService: SharedService, private sideNavService: SideNavsService, private scheduleService: ScheduleService) { }
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('id');
     if (this.userId) {
-      this.scheduleService.getUserSchedule(this.userId).subscribe(item => {
-        this.userSchedule = item.result.data || [];
-        this.generateDays();
-        this.calendarDays = this.mergeDaysWithEvents(this.daysArray, this.userSchedule);
-      });
+      this.subscriptions.push(
+        this.scheduleService.getUserSchedule(this.userId).subscribe(item => {
+          this.userSchedule = item.result.data || [];
+          this.generateDays();
+          this.calendarDays = this.mergeDaysWithEvents(this.daysArray, this.userSchedule);
+          console.log(this.calendarDays)
+        })
+      );
     }
   }
 
@@ -50,6 +55,7 @@ export class ContactScheduleComponent implements OnInit {
         fullDate: currentDate
       });
     }
+    console.log(this.daysArray)
   }
 
   mergeDaysWithEvents(days: any[], events: any[]) {
@@ -199,7 +205,7 @@ export class ContactScheduleComponent implements OnInit {
           ? slot.miniSlots[slot.miniSlots.length - 1].time
           : slot.time;
 
-        const inRange = this.compareTimes(slotEnd, startTime) >= 0 && this.compareTimes(slotStart, endTime) <= 0;
+        const inRange = this.compareTimes(slotEnd, startTime) >= 0 && this.compareTimes(slotStart, endTime ?? '') <= 0;
         slot.selected = inRange;
         // main slot isStart/isEnd if its time or its miniSlots contain the start/end
         slot.isStart = slot.time === startTime || (Array.isArray(slot.miniSlots) && slot.miniSlots.some((m: any) => m.time === startTime));
@@ -207,7 +213,7 @@ export class ContactScheduleComponent implements OnInit {
 
         if (Array.isArray(slot.miniSlots)) {
           slot.miniSlots.forEach((m: any) => {
-            const inMiniRange = this.compareTimes(m.time, startTime) >= 0 && this.compareTimes(m.time, endTime) <= 0;
+            const inMiniRange = this.compareTimes(m.time, startTime) >= 0 && this.compareTimes(m.time, endTime ?? '') <= 0;
             m.selected = inMiniRange;
             m.isStart = m.time === startTime;
             m.isEnd = m.time === endTime;
@@ -219,6 +225,11 @@ export class ContactScheduleComponent implements OnInit {
         if (inRange) slot.showMiniSlots = true;
       });
       console.log(this.selectedItems)
+      this.selectedItems = [...this.selectedItems].sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      );
+
+      console.log(day.timeline)
       this.sharedService.setRightSideNavContent(this.selectedItems)
       this.sideNavService.openRightSideNav()
       this.startTimeOrEndTime = 'start';
@@ -278,5 +289,9 @@ export class ContactScheduleComponent implements OnInit {
       startDate.setMinutes(startDate.getMinutes() + 5);
     }
     return result;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }

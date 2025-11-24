@@ -25,6 +25,6 @@
       </div>
     </div>
 
-    <div class="main_button" (click)="submit()">Send Request</div>
+    <div class="main_button" *ngIf="selectedSchedule.length !== 0" (click)="submit()">Send Request</div>
   </div>
 </div>
