@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GenericResponse, Invitation } from '../../../interfaces/shared.interface';
+import { GenericResponse, Invitation, SendInvitation } from '../../../interfaces/shared.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +29,9 @@ export class InvitationsService {
   declineInvitation(invitationId: string): Observable<GenericResponse<any>> {
     return this.http.post<GenericResponse<any>>(`/consoleApi/invitation/decline/${invitationId}`,{});
   } 
+
+  sendInvitation(data:SendInvitation[]){
+    return this.http.post<GenericResponse<any>>(`/consoleApi/invitation/invite/`,{invitations:data});
+  }
 
 }

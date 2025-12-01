@@ -44,15 +44,26 @@ export class RightSideNavComponent implements OnDestroy {
 
   onCheckboxChange(event: Event, index: number): void {
     const isChecked = (event.target as HTMLInputElement).checked;
-
-    // Update isChecked property
     this.selectedSchedule[index] = {
       ...this.selectedSchedule[index],
       isChecked
     };
-
     console.log(this.selectedSchedule);
   }
+
+onTitleChange(event: Event, index: number): void {
+  const value = (event.target as HTMLInputElement).value;
+  this.selectedSchedule[index].title = value;
+}
+onUrgentChange(event: Event, index: number): void {
+  const checked = (event.target as HTMLInputElement).checked;
+  this.selectedSchedule[index].urgent = checked ? 1 : 0;
+}
+onLocationChange(event: Event, index: number): void {
+  const value = (event.target as HTMLSelectElement).value;
+  this.selectedSchedule[index].location = value;
+}
+
 
 
   submit(): void {

@@ -6,6 +6,7 @@ import { CalendarDay, Invitation, SelectedSchedule } from '../../../../interface
 import { SideNavsService } from '../../../auth/services/side-navs.service';
 import { SharedService } from '../../../auth/services/shared.service';
 import { Subscription } from 'rxjs';
+import { InvitationsService } from '../../services/invitations.service';
 
 @Component({
   selector: 'app-contact-schedule',
@@ -24,7 +25,7 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
   selectedItems: SelectedSchedule[] = [];
   subscriptions: Subscription[] = []
 
-  constructor(private route: ActivatedRoute, private sharedService: SharedService, private sideNavService: SideNavsService, private scheduleService: ScheduleService) { }
+  constructor(private route: ActivatedRoute, private invitationsService:InvitationsService, private sharedService: SharedService, private sideNavService: SideNavsService, private scheduleService: ScheduleService) { }
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('id');
@@ -33,6 +34,8 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
         this.scheduleService.getUserSchedule(this.userId).subscribe(item => {
           this.userSchedule = item.result.data || [];
           this.generateDays();
+          console.log(this.userSchedule)
+          console.log(this.daysArray)
           this.calendarDays = this.mergeDaysWithEvents(this.daysArray, this.userSchedule);
           console.log(this.calendarDays)
         })
@@ -48,20 +51,31 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
     for (let i = 0; i < daysInMonth; i++) {
       const currentDate = new Date();
       currentDate.setDate(today.getDate() + i);
+
       this.daysArray.push({
         weekday: currentDate.toLocaleDateString('en-US', { weekday: 'long' }),
         date: currentDate.getDate(),
         month: currentDate.toLocaleDateString('en-US', { month: 'long' }),
-        fullDate: currentDate
+        fullDate: new Date(currentDate.toISOString())  // ← ISO DATE HERE
       });
     }
+    
+    // this.invitationsService.sendInvitation()
     console.log(this.daysArray)
   }
 
   mergeDaysWithEvents(days: any[], events: any[]) {
     const ev = events || [];
     return days.map(day => {
-      const matchedEvents = ev.filter((e: any) => e.weekday === day.weekday);
+      const matchedEvents = ev.filter((e: any) => {
+
+        let eventDate = new Date(e.date).toISOString().slice(0, 10);
+        let dayDate = new Date(day.fullDate).toISOString().slice(0, 10);
+
+        if ((e.weekday === day.weekday && !e.isSingleUse) || eventDate == dayDate) {
+          return e;
+        }
+      });
       return {
         ...day,
         events: matchedEvents,
@@ -126,9 +140,9 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
     event.stopPropagation();
 
     // ensure daySelection exists
-    let daySelection = this.selectedItems.find((d: any) => d.date.getTime() === day.fullDate.getTime());
+    let daySelection = this.selectedItems?.find((d: any) => d.date.getTime() === day.fullDate.getTime());
     if (!daySelection) {
-      daySelection = { day: day.weekday, date: day.fullDate, start: null, end: null };
+      daySelection = { day: day.weekday, date: day.fullDate, start: null, end: null , title:'', description: '', urgent:0, location: ''};
       this.selectedItems.push(daySelection);
     }
 

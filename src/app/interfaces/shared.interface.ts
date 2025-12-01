@@ -84,5 +84,23 @@ export interface SelectedSchedule {
     date: Date,
     start?: string | null,
     end?: string | null,
-    isChecked?:boolean
+    isChecked?:boolean,
+    title:string,
+    description:string,
+    urgent:number,
+    location:string,
+    isSingleUse?:number;
+}
+
+export interface SendInvitation {
+  title: string,
+  description: string,
+  start: string,
+  end: string,
+  urgent:number,
+  weekday: string,
+  invitee: string,
+  location:string,
+  isSingleUse:number,
+  date:Date
 }

@@ -46,15 +46,9 @@
     padding: 5px 10px;
 }
 
-.selectedScheduleEveryDayCheck {
+.selectedScheduleEveryDayCheck, .urgent_checkbox_label {
     display: flex;
     justify-content: row;
     align-items: center;
     gap: 5px;
-}
-
-.selectedScheduleEveryDayCheckBox {
-    width: 20px;
-    height: 20px;
-    accent-color: #d0ead0;
 }
