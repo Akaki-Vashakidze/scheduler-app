@@ -31,7 +31,7 @@ export class InvitationsService {
   } 
 
   sendInvitation(data:SendInvitation[]){
-    return this.http.post<GenericResponse<any>>(`/consoleApi/invitation/invite/`,{invitations:data});
+    return this.http.post<GenericResponse<any>>(`/consoleApi/invitation/invite`,{invitations:data});
   }
 
 }

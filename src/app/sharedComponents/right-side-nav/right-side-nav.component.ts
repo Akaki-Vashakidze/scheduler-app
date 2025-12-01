@@ -7,8 +7,9 @@ import { Subject, takeUntil } from 'rxjs';
 import { MatIcon } from "@angular/material/icon";
 import { SideNavsService } from '../../features/auth/services/side-navs.service';
 import { SharedService } from '../../features/auth/services/shared.service';
-import { SelectedSchedule } from '../../interfaces/shared.interface';
+import { SelectedSchedule, SendInvitation } from '../../interfaces/shared.interface';
 import { CommonModule } from '@angular/common';
+import { InvitationsService } from '../../features/schedule/services/invitations.service';
 
 @Component({
   selector: 'app-right-side-nav',
@@ -23,7 +24,8 @@ export class RightSideNavComponent implements OnDestroy {
 
   constructor(
     private sharedService: SharedService,
-    private sideNavService: SideNavsService
+    private sideNavService: SideNavsService,
+    private invitationService: InvitationsService
   ) {
     this.sharedService.rightSideNavChosenSchedulHelper$
       .pipe(takeUntil(this.destroy$))
@@ -67,8 +69,25 @@ onLocationChange(event: Event, index: number): void {
 
 
   submit(): void {
-    const checkedItems = this.selectedSchedule.filter(i => i.isChecked);
     console.log(this.selectedSchedule);
+      let data  = this.selectedSchedule.map(item => {
+      return {
+        isSingleUse: item.isChecked ? 0 : 1,
+        title: item.title,
+        start: item.start || '',
+        end: item.end || '',
+        description:"test desc",
+        urgent:item.urgent,
+        weekday: item.day,
+        invitee: '68584e136c2738afa6d53d46',
+        location:item.location,
+        date:item.date
+      };
+    });
+    console.log(data)
+    this.invitationService.sendInvitation(data).subscribe(item => {
+      console.log(item)
+    })
   }
 
   closeRightNav(): void {
