@@ -1,0 +1,38 @@
+    <div class="selectedSchedule" *ngIf="selectedSchedule">
+      <div class="selectedScheduleItem" *ngFor="let item of selectedSchedule; let i = index">
+        <div class="selectedScheduleDate">{{ item.date | date: 'dd MMM yyyy' }}</div>
+        <div class="selectedScheduleItemPart2">
+          <div class="selectedScheduleDay">{{ item.day }}</div>
+          <div class="selectedScheduleTime">{{ (item.start ?? '?') + ' - ' + (item.end ?? '?') }}</div>
+        </div>
+        <label class="selectedScheduleEveryDayCheck">
+          <input type="checkbox" [checked]="item.isChecked" (change)="onCheckboxChange($event, i)"
+            class="selectedScheduleEveryDayCheckBox" />
+          <span>
+            <span>{{ 'Every ' | translate }}</span>
+            <span>{{ item.day }}</span>
+          </span>
+        </label>
+
+        <input type="text" name="title" [value]="item.title || ''" (input)="onTitleChange($event, i)"
+          [placeholder]="'addTitle' | translate" required class="invitation_title_add" />
+
+        <label class="urgent_checkbox_label">
+          <input type="checkbox" [checked]="item.urgent === 1" (change)="onUrgentChange($event, i)" class="isUrgentChecbox" />
+          <span>{{ 'Urgent' | translate }}</span>
+        </label>
+
+        <select (change)="onLocationChange($event, i)" [value]="item.location || ''" class="invitation_location_select">
+          <option value="" disabled>
+            {{ 'Select location' | translate }}
+          </option>
+          <option value="Pool A">Pool A</option>
+          <option value="Pool B">Pool B</option>
+          <option value="Gym">Gym</option>
+          <option value="Online">Online</option>
+        </select>
+        <app-error-box *ngIf="errorText != ''" [error]="errorText"></app-error-box>
+      </div>
+    </div>
+
+    <div class="main_button" *ngIf="selectedSchedule.length !== 0" (click)="submit()">Send Request</div>

@@ -31,6 +31,7 @@ export interface GenericResponse<T> {
   statusCode: number;
   result: GenericData<T>;
   errors?:string;
+  message:[] | any
 }
 
 export interface GenericData<T> {
