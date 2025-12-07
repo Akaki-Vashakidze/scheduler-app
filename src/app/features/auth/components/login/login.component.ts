@@ -28,7 +28,6 @@ export class LoginComponent {
 
   onLogin() {
     this.errorMessage = null;
-    console.log('Login with:', this.email, this.password);
     this.authService.login(this.email,this.password).subscribe(item => {
       if(item.error) {
         this.errorMessage = item.keyword || 'Login failed';

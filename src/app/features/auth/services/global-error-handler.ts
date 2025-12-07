@@ -7,7 +7,6 @@ export class GlobalErrorHandler implements ErrorHandler {
     constructor(private zone: NgZone, private snackBarService: SnackbarService) { }
 
     handleError(error: any): void {
-        console.log(error.error.message)
         if(error.error.message) {
             this.snackBarService.error(error.error.message[0].split('.0.')[1] + '. ')
         }

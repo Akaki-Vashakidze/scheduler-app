@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { GenericResponse, Invitation, SendInvitation } from '../../../interfaces/shared.interface';
 
 @Injectable({
@@ -9,6 +9,12 @@ import { GenericResponse, Invitation, SendInvitation } from '../../../interfaces
 export class InvitationsService {
 
   constructor(private http: HttpClient) { }
+  ContactAsInviteeId!:string;
+  public needToUpdateMySentInvitations = new BehaviorSubject<any>(null);
+
+  updateMySentInvitations(){
+    this.needToUpdateMySentInvitations.next(true)
+  }
 
   GetInvitations(searchQuery: string | null, location:string | null, approved:number | null, active:number | null, weekday:string | null, specificDate:Date | null, urgent:number | null ): Observable<GenericResponse<Invitation[]>> {
     let body : {searchQuery?: string, location?: string, approved?: number, active?: number, weekday?: string, specificDate?: Date, urgent?: number} = {};
@@ -34,4 +40,12 @@ export class InvitationsService {
     return this.http.post<GenericResponse<any>>(`/consoleApi/invitation/invite`,{invitations:data});
   }
 
+  GetMySentInvitations( location:string | null, active:number | null, urgent:number | null , approved:number | null ): Observable<GenericResponse<Invitation[]>> {
+    let body : {location?: string, active?: number, urgent?: number, approved?: number} = {};
+    location != null ? body.location = location : null;
+    active != null ? body.active = active : null;
+    urgent != null ? body.urgent = urgent : null;
+    approved != null ? body.approved = approved : null;
+    return this.http.post<GenericResponse<Invitation[]>>(`/consoleApi/invitation/mySentInvitations`, body);
+  }
 }

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { ErrorBoxComponent } from '../error-box/error-box.component';
 import { Subject, takeUntil } from 'rxjs';
@@ -10,9 +9,10 @@ import { SnackbarService } from '../../features/auth/services/snack-bar.service'
 import { InvitationsService } from '../../features/schedule/services/invitations.service';
 import { SelectedSchedule } from '../../interfaces/shared.interface';
 
+
 @Component({
   selector: 'app-invitation-creator-box',
-  imports: [TranslateModule, CommonModule, MatIcon, ErrorBoxComponent, InvitationCreatorBoxComponent],
+  imports: [TranslateModule, CommonModule, ErrorBoxComponent],
   templateUrl: './invitation-creator-box.component.html',
   styleUrl: './invitation-creator-box.component.scss'
 })
@@ -66,8 +66,6 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
     this.selectedSchedule[index].location = value;
   }
 
-
-
   submit(): void {
     this.errorText = '';
     for (let item of this.selectedSchedule) {
@@ -90,14 +88,15 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
       description: "test desc",
       urgent: item.urgent,
       weekday: item.day,
-      invitee: '68584e136c2738afa6d53d46',
+      invitee: this.invitationService.ContactAsInviteeId,
       location: item.location,
       date: item.date
     }));
 
     this.invitationService.sendInvitation(data).subscribe(item => {
-      console.log(item);
       if (item.statusCode == 200) {
+        this.selectedSchedule = [];
+        this.invitationService.updateMySentInvitations()
         this.snackBarService.success('Invitation sent')
       }
     });

@@ -11,9 +11,17 @@ export interface Record {
     state:number;
 }
 
+export interface User {
+    _id: string,
+    email: string,
+    name:string,
+    surname:string,
+    record: Record
+}
+
 export interface Invitation {
     _id: string,
-    invitee: string,
+    invitee: User,
     weekday: string,
     inviter: string,
     end: string,
@@ -24,7 +32,9 @@ export interface Invitation {
     approved: number,
     urgent: number,
     canceled: number,
-    record: Record
+    record: Record,
+    date?:Date,
+    isSingleUse:number,
 }
 
 export interface GenericResponse<T> {

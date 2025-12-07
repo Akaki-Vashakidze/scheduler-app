@@ -15,6 +15,8 @@ import { MatButtonModule } from '@angular/material/button';
 export class SignupComponent {
   lang: string = 'en';
   email: string = '';
+  name: string = '';
+  surname: string = '';
   code: string = '';
   password: string = '';
   password2: string = '';
@@ -64,7 +66,6 @@ export class SignupComponent {
 
   confirmCode() {
     this.resetResponceMessages()
-    console.log(this.email, this.code)
     this.authService.confirmCode(this.email, this.code).subscribe(item => {
       if (item.result.data) {
         this.successMessage = 'Code confirmed';
@@ -100,8 +101,7 @@ export class SignupComponent {
   signUp() {
     this.resetResponceMessages()
     if (this.password === this.password2) {
-      this.authService.signUp(this.email, this.password, this.code).subscribe(item => {
-        console.log(item)
+      this.authService.signUp(this.email,this.name, this.surname, this.password, this.code).subscribe(item => {
         if (item.error) {
           this.errorMessage = item.keyword || 'Login failed';
         } else {

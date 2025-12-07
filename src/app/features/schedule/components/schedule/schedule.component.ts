@@ -17,7 +17,6 @@ export class ScheduleComponent {
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('id');
-    console.log(this.userId)
     this.scheduleService.getUserSchedule(this.userId ?? '').subscribe(item => {
       console.log(item)
     })

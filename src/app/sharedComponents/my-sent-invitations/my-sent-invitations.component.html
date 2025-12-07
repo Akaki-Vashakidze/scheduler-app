@@ -1,0 +1,20 @@
+<div class="my-sent-invitations" *ngIf="mySentInvitations">
+    <h5>Sent invitations</h5>
+    <div class="my-sent-invitations_list">
+        <div class="my-sent-invitations_item" [ngClass]="{
+       'bkRed': invitation.approved == -1,
+       'bkGreen': invitation.approved == 1,
+       'bkBlue': invitation.canceled,
+       'bkNeutral': invitation.approved == 0 && !invitation.canceled,
+     }" *ngFor="let invitation of mySentInvitations">
+            <div class="my-sent-invitations_email">{{invitation.invitee.name + ' ' + invitation.invitee.surname}}</div>
+            <div class="my-sent-invitations_date" *ngIf="invitation.isSingleUse">
+                {{ invitation.date | date:'mediumDate' }}
+            </div>
+            <div class="my-sent-invitations_date" *ngIf="!invitation.isSingleUse">
+                {{ invitation.weekday }}
+            </div>
+            <div class="my-sent-invitations_time">{{invitation.start + ' - ' + invitation.end}}</div>
+        </div>
+    </div>
+</div>

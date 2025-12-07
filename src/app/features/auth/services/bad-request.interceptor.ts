@@ -18,7 +18,8 @@ export class BadRequestInterceptor implements HttpInterceptor {
       tap({
         next: event => {
           if (event instanceof HttpResponse) {
-            if(event.body.statusCode == 400) {
+            let statusCode = event.body.statusCode
+            if(statusCode == 400 || statusCode == 404) {
               let errorT = event.body.errors;
               this.snackbarService.error(errorT)
             }
@@ -27,8 +28,8 @@ export class BadRequestInterceptor implements HttpInterceptor {
         error: err => {
           if (err instanceof HttpErrorResponse) {
             if(err.error.statusCode == 400){
-              let errorT = err.error.message
-              this.snackbarService.error(errorT[0].split('.0.')[1])
+              let errorT = err.error.message[0].split('.0.')[1] || err.error.message[0] ||  'Error';
+              this.snackbarService.error(errorT)
             }
           }
         }

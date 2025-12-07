@@ -22,8 +22,8 @@ export class AuthService {
     return this.http.put(`/consoleApi/auth/change-password`, {currentPassword:currentPassword, newPassword:password });
   }
 
-  signUp(email: string, password: string, code:string): Observable<any> {
-    const body = { email, password, code };
+  signUp(email: string, name:string, surname:string, password: string, code:string): Observable<any> {
+    const body = { email, name, surname, password, code };
     return this.http.post(`/consoleApi/auth/signup`, body);
   }
 
@@ -37,7 +37,6 @@ export class AuthService {
   } 
 
   confirmCode(email:string,code: string): Observable<any> {
-    console.log(email,code)
     const body = { email, code };
     return this.http.post(`/consoleApi/auth/confirmCodeEmail`, body);
   }

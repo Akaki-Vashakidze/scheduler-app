@@ -19,7 +19,6 @@ export class UserService {
     try {
       const storedUser = localStorage.getItem('schedule_user');
       this.user = storedUser ? JSON.parse(storedUser) : null;
-      console.log(this.user);
     } catch (error) {
       console.error('Failed to parse user from localStorage:', error);
       this.user = null;

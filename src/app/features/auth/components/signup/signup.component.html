@@ -5,6 +5,10 @@
             <div class="inputs_cont">
 
                 <div *ngIf="step1" class="firstStep steps">
+                    <input type="name" name="name" [(ngModel)]="name" placeholder="name" required
+                        class="login_input" />
+                    <input type="surname" name="surname" [(ngModel)]="surname" placeholder="surname" required
+                        class="login_input" />
                     <input type="email" name="email" [(ngModel)]="email" placeholder="Email" required
                         class="login_input" />
                     <button [disabled]="step2" (click)="sendVerificationCodeEmail()" class="main_button">Send Verification Code</button>

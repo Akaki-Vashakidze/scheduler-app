@@ -25,22 +25,26 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
   selectedItems: SelectedSchedule[] = [];
   subscriptions: Subscription[] = []
 
-  constructor(private route: ActivatedRoute, private invitationsService:InvitationsService, private sharedService: SharedService, private sideNavService: SideNavsService, private scheduleService: ScheduleService) { }
+  constructor(private route: ActivatedRoute, private invitationsService: InvitationsService, private sharedService: SharedService, private sideNavService: SideNavsService, private scheduleService: ScheduleService) { }
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('id');
     if (this.userId) {
       this.subscriptions.push(
-        this.scheduleService.getUserSchedule(this.userId).subscribe(item => {
-          this.userSchedule = item.result.data || [];
-          this.generateDays();
-          console.log(this.userSchedule)
-          console.log(this.daysArray)
-          this.calendarDays = this.mergeDaysWithEvents(this.daysArray, this.userSchedule);
-          console.log(this.calendarDays)
+        this.invitationsService.needToUpdateMySentInvitations.subscribe(item => {
+          this.getUserSchedule()
         })
       );
     }
+  }
+
+  getUserSchedule() {
+    this.scheduleService.getUserSchedule(this.userId ?? '').subscribe(item => {
+      this.invitationsService.ContactAsInviteeId = this.userId || '';
+      this.userSchedule = item.result.data || [];
+      this.generateDays();
+      this.calendarDays = this.mergeDaysWithEvents(this.daysArray, this.userSchedule);
+    })
   }
 
   generateDays() {
@@ -59,9 +63,8 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
         fullDate: new Date(currentDate.toISOString())  // ← ISO DATE HERE
       });
     }
-    
+
     // this.invitationsService.sendInvitation()
-    console.log(this.daysArray)
   }
 
   mergeDaysWithEvents(days: any[], events: any[]) {
@@ -142,7 +145,7 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
     // ensure daySelection exists
     let daySelection = this.selectedItems?.find((d: any) => d.date.getTime() === day.fullDate.getTime());
     if (!daySelection) {
-      daySelection = { day: day.weekday, date: day.fullDate, start: null, end: null , title:'', description: '', urgent:0, location: ''};
+      daySelection = { day: day.weekday, date: day.fullDate, start: null, end: null, title: '', description: '', urgent: 0, location: '' };
       this.selectedItems.push(daySelection);
     }
 
@@ -238,12 +241,10 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
         // keep mini slots visible for affected slots until user resets or cancels
         if (inRange) slot.showMiniSlots = true;
       });
-      console.log(this.selectedItems)
       this.selectedItems = [...this.selectedItems].sort(
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
       );
 
-      console.log(day.timeline)
       this.sharedService.setRightSideNavContent(this.selectedItems)
       this.sideNavService.openRightSideNav()
       this.startTimeOrEndTime = 'start';
@@ -272,8 +273,6 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
     });
 
     this.startTimeOrEndTime = 'start';
-    console.log(`All slots reset for ${day.weekday}, ${day.date}`, day);
-    console.log(this.selectedItems)
     if (this.selectedItems.length == 0) {
       this.sideNavService.closeRightSideNav()
     }

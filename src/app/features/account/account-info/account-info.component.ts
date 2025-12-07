@@ -12,6 +12,5 @@ import { RouterModule } from '@angular/router';
 })
 export class AccountInfoComponent {
   constructor(userService:UserService){
-    console.log(userService.getUser())
   }
 }

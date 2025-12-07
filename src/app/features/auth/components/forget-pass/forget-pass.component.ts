@@ -29,7 +29,6 @@ export class ForgetPassComponent {
   sendMail() {
     this.resetResponceMessages()
     this.authService.forgetPass(this.email).subscribe(item => {
-      console.log(item)
       if(item.result.data) {
         this.successMessage = item.result.data.message;
       } else {

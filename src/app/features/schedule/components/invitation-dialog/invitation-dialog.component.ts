@@ -13,7 +13,6 @@ export class InvitationDIalogComponent {
     public dialogRef: MatDialogRef<InvitationDIalogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    console.log(data)
   }
 
   close() {
