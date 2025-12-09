@@ -31,6 +31,18 @@ body {
   // box-shadow: var(--buttons-main) 0px 1px 2px 0px, var(--buttons-main) 0px 2px 6px 2px;
 }
 
+.main_button_small {
+  background-color: var(--primary);
+  border: none;
+  padding: 4px 8px;
+  border-radius: 30px;
+  margin: 5px;
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: var(--buttons-main) 0px 2px 5px 0px, var(--buttons-main) 0px 1px 1px 0px;
+}
+
 .rejectButton {
   background-color: #de4f41;
 }
@@ -115,6 +127,18 @@ app-signup {
     border-radius: 30px;
     margin: 5px;
     color: #fff;
+  }
+
+  .main_button_small {
+    background-color: var(--primary);
+    border: none;
+    padding: 3px 6px;
+    border-radius: 30px;
+    margin: 4px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: var(--buttons-main) 0px 2px 5px 0px, var(--buttons-main) 0px 1px 1px 0px;
   }
 
   .main_select {

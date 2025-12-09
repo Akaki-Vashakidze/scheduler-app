@@ -15,6 +15,12 @@
                 {{ invitation.weekday }}
             </div>
             <div class="my-sent-invitations_time">{{invitation.start + ' - ' + invitation.end}}</div>
+            <div class="my-sent-invitations_actions">
+                <div class="main_button_small">Remind</div>
+                <div class="main_button_small" (click)="removeMySentlInvitation(invitation._id)">Remove</div>
+                <div class="main_button_small" *ngIf="!invitation.canceled" (click)="cancelInvitationRequest(invitation._id)">Cancel</div>
+                <div class="main_button_small" *ngIf="invitation.canceled" (click)="reactivateMySentInvitationRequest(invitation._id)">Reactivate</div>
+            </div>
         </div>
     </div>
 </div>

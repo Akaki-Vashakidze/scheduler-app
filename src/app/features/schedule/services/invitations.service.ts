@@ -36,6 +36,18 @@ export class InvitationsService {
     return this.http.post<GenericResponse<any>>(`/consoleApi/invitation/decline/${invitationId}`,{});
   } 
 
+  cancelInvitation(invitationId: string): Observable<GenericResponse<any>> {
+    return this.http.post<GenericResponse<any>>(`/consoleApi/invitation/cancel/${invitationId}`,{});
+  } 
+
+  reactivateMySentlInvitation(invitationId: string): Observable<GenericResponse<any>> {
+    return this.http.post<GenericResponse<any>>(`/consoleApi/invitation/reactivateMySent/${invitationId}`,{});
+  } 
+
+  removeMySentlInvitation(invitationId: string): Observable<GenericResponse<any>> {
+    return this.http.delete<GenericResponse<any>>(`/consoleApi/invitation/removeMySent/${invitationId}`,{});
+  } 
+
   sendInvitation(data:SendInvitation[]){
     return this.http.post<GenericResponse<any>>(`/consoleApi/invitation/invite`,{invitations:data});
   }

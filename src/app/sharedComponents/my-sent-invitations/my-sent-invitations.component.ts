@@ -38,4 +38,28 @@ export class MySentInvitationsComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  cancelInvitationRequest(invitationId:string){
+    this.invitationsService.cancelInvitation(invitationId).subscribe(item => {
+      if(item.statusCode == 200) {
+        this.invitationsService.updateMySentInvitations()
+      }
+    })
+  }
+
+  reactivateMySentInvitationRequest(invitationId:string){
+    this.invitationsService.reactivateMySentlInvitation(invitationId).subscribe(item => {
+      if(item.statusCode == 200) {
+        this.invitationsService.updateMySentInvitations()
+      }
+    })
+  }
+
+  removeMySentlInvitation(invitationId:string){
+    this.invitationsService.removeMySentlInvitation(invitationId).subscribe(item => {
+      if(item.statusCode == 200) {
+        this.invitationsService.updateMySentInvitations()
+      }
+    })
+  }
 }
