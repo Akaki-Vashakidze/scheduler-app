@@ -11,7 +11,7 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrl: './my-sent-invitations.component.scss'
 })
 export class MySentInvitationsComponent implements OnInit, OnDestroy {
-  mySentInvitations!: Invitation[];
+  mySentInvitations: Invitation[] = [];
   private destroy$ = new Subject<void>();
 
   constructor(private invitationsService: InvitationsService) {}

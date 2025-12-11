@@ -9,12 +9,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SnackbarService } from '../../../auth/services/snack-bar.service';
 
 @Component({
-  selector: 'app-my-invitations',
+  selector: 'app-recieved-my-invitations',
   imports: [CommonModule, TranslateModule, MatTabsModule, FormsModule, MatSlideToggleModule],
-  templateUrl: './my-invitations.component.html',
-  styleUrl: './my-invitations.component.scss'
+  templateUrl: './my-recieved-invitations.component.html',
+  styleUrl: './my-recieved-invitations.component.scss'
 })
-export class MyInvitationsComponent {
+export class MyRecievedInvitationsComponent {
   invitations!: Invitation[];
   searchQuery: string | null = null;
   sortByWeekday: string | null = null;

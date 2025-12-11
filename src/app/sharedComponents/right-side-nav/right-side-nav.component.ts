@@ -5,11 +5,12 @@ import { SideNavsService } from '../../features/auth/services/side-navs.service'
 import { CommonModule } from '@angular/common';
 import { InvitationCreatorBoxComponent } from '../invitation-creator-box/invitation-creator-box.component';
 import { MySentInvitationsComponent } from "../my-sent-invitations/my-sent-invitations.component";
+import { PendingRecievedInvitationsComponent } from "../recieved-invitations/pending-recieved-invitations.component";
 
 @Component({
   selector: 'app-right-side-nav',
   standalone: true,
-  imports: [TranslateModule, CommonModule, MatIcon, InvitationCreatorBoxComponent, MySentInvitationsComponent],
+  imports: [TranslateModule, CommonModule, MatIcon, InvitationCreatorBoxComponent, MySentInvitationsComponent, PendingRecievedInvitationsComponent],
   templateUrl: './right-side-nav.component.html',
   styleUrls: ['./right-side-nav.component.scss']
 })

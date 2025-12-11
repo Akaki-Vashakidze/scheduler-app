@@ -33,6 +33,7 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
       this.subscriptions.push(
         this.invitationsService.needToUpdateMySentInvitations.subscribe(item => {
           this.getUserSchedule()
+          this.sharedService.setRightSideNavContent(this.selectedItems)
         })
       );
     }

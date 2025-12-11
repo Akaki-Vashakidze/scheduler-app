@@ -6,7 +6,7 @@ import { AccountInfoComponent } from './features/account/account-info/account-in
 import { AuthGuard } from './features/auth/guards/auth.guard';
 import { ResetPasswordComponent } from './features/auth/components/reset-password/reset-password.component';
 import { ForgetPassComponent } from './features/auth/components/forget-pass/forget-pass.component';
-import { MyInvitationsComponent } from './features/schedule/components/my-invitations/my-invitations.component';
+import { MyRecievedInvitationsComponent } from './features/schedule/components/my-invitations/my-recieved-invitations.component';
 import { ContactScheduleComponent } from './features/schedule/components/contact-schedule/contact-schedule.component';
 
 export const routes: Routes = [
@@ -16,6 +16,6 @@ export const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'account', component: AccountInfoComponent, canActivate: [AuthGuard] },
   { path: 'forgot-pass', component: ForgetPassComponent },
-  { path: 'invitations', component: MyInvitationsComponent , canActivate: [AuthGuard] },
+  { path: 'invitations', component: MyRecievedInvitationsComponent , canActivate: [AuthGuard] },
   { path: 'contact/schedule/:id', component: ContactScheduleComponent , canActivate: [AuthGuard] },
 ];

@@ -97,6 +97,7 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
       if (item.statusCode == 200) {
         this.selectedSchedule = [];
         this.invitationService.updateMySentInvitations()
+        this.sharedService.setRightSideNavContent([])
         this.snackBarService.success('Invitation sent')
       }
     });

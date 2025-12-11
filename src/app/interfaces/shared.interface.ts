@@ -23,7 +23,7 @@ export interface Invitation {
     _id: string,
     invitee: User,
     weekday: string,
-    inviter: string,
+    inviter: User,
     end: string,
     title: string,
     start: string,

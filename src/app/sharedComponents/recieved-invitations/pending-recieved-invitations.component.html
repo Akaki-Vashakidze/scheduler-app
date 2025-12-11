@@ -1,13 +1,14 @@
-<div class="my-sent-invitations" *ngIf="mySentInvitations.length > 0">
-    <h5>Sent invitations</h5>
+
+<div class="my-sent-invitations" *ngIf="invitations.length > 0">
+    <h5>Recieved invitations</h5>
     <div class="my-sent-invitations_list">
         <div class="my-sent-invitations_item" [ngClass]="{
        'bkRed': invitation.approved == -1,
        'bkGreen': invitation.approved == 1,
        'bkBlue': invitation.canceled,
        'bkNeutral': invitation.approved == 0 && !invitation.canceled,
-     }" *ngFor="let invitation of mySentInvitations">
-            <div class="my-sent-invitations_email">{{invitation.invitee.name + ' ' + invitation.invitee.surname}}</div>
+     }" *ngFor="let invitation of invitations">
+            <div class="my-sent-invitations_email">{{invitation.inviter.name + ' ' + invitation.inviter.surname}}</div>
             <div class="my-sent-invitations_date" *ngIf="invitation.isSingleUse">
                 {{ invitation.date | date:'mediumDate' }}
             </div>
@@ -16,10 +17,8 @@
             </div>
             <div class="my-sent-invitations_time">{{invitation.start + ' - ' + invitation.end}}</div>
             <div class="my-sent-invitations_actions">
-                <div class="main_button_small">Remind</div>
-                <div class="main_button_small" (click)="removeMySentlInvitation(invitation._id)">Remove</div>
-                <div class="main_button_small" *ngIf="!invitation.canceled" (click)="cancelInvitationRequest(invitation._id)">Cancel</div>
-                <div class="main_button_small" *ngIf="invitation.canceled" (click)="reactivateMySentInvitationRequest(invitation._id)">Reactivate</div>
+                <div class="main_button_small" (click)="acceptInvitation(invitation._id)">Accept</div>
+                <div class="main_button_small" (click)="declineInvitation(invitation._id)">decline</div>
             </div>
         </div>
     </div>
