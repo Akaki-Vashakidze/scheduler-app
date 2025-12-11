@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { InvitationsService } from '../../services/invitations.service';
 import { Invitation } from '../../../../interfaces/shared.interface';
 import { TranslateModule } from '@ngx-translate/core';
@@ -7,6 +7,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SnackbarService } from '../../../auth/services/snack-bar.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recieved-my-invitations',
@@ -14,15 +15,20 @@ import { SnackbarService } from '../../../auth/services/snack-bar.service';
   templateUrl: './my-recieved-invitations.component.html',
   styleUrl: './my-recieved-invitations.component.scss'
 })
-export class MyRecievedInvitationsComponent {
+export class MyRecievedInvitationsComponent implements OnDestroy {
   invitations!: Invitation[];
   searchQuery: string | null = null;
   sortByWeekday: string | null = null;
   tabIndex: number | null = 0;
   isUrgent: number | null = null;
   searchTimeout: any;
+  subscriptions:Subscription[] = [];
   constructor(private invitationService: InvitationsService, private snackbarService: SnackbarService) {
-    this.getInvitations(this.searchQuery, 0,this.sortByWeekday,this.isUrgent)
+    this.subscriptions.push(
+      invitationService.needToUpdateRecievedInvitations.subscribe(item => {
+        this.getInvitations(this.searchQuery, 0,this.sortByWeekday,this.isUrgent)
+      })
+    )
   }
 
   getInvitations(searchQuery: string | null, approved: number | null, sortByWeekday: string | null = null, isUrgent: number | null = null) {
@@ -48,6 +54,7 @@ export class MyRecievedInvitationsComponent {
     this.invitationService.acceptInvitation(invitationId).subscribe(response => {
       if(response.statusCode === 200) {
         this.getInvitations(this.searchQuery, this.tabIndex, this.sortByWeekday, this.isUrgent);
+        this.invitationService.updateRecievedInvitations()
         this.snackbarService.success('Invitation accepted');
       } 
     });
@@ -57,6 +64,7 @@ export class MyRecievedInvitationsComponent {
     this.invitationService.declineInvitation(invitationId).subscribe(response => {
       if(response.statusCode === 200) {
         this.getInvitations(this.searchQuery, this.tabIndex, this.sortByWeekday, this.isUrgent);
+        this.invitationService.updateRecievedInvitations()
         this.snackbarService.success('Invitation declined');
       } 
     });
@@ -98,5 +106,9 @@ export class MyRecievedInvitationsComponent {
     const isChecked = event.checked;
     this.isUrgent = isChecked ? 1 : null;
     this.getInvitations(this.searchQuery, this.tabIndex, this.sortByWeekday, this.isUrgent);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }

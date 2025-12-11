@@ -31,7 +31,7 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
     this.userId = this.route.snapshot.paramMap.get('id');
     if (this.userId) {
       this.subscriptions.push(
-        this.invitationsService.needToUpdateMySentInvitations.subscribe(item => {
+        this.invitationsService.needToUpdateSentInvitations.subscribe(item => {
           this.getUserSchedule()
           this.sharedService.setRightSideNavContent(this.selectedItems)
         })

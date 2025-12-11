@@ -17,7 +17,7 @@ export class MySentInvitationsComponent implements OnInit, OnDestroy {
   constructor(private invitationsService: InvitationsService) {}
 
   ngOnInit(): void {
-    this.invitationsService.needToUpdateMySentInvitations
+    this.invitationsService.needToUpdateSentInvitations
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.getMySentInvitations();
@@ -42,7 +42,7 @@ export class MySentInvitationsComponent implements OnInit, OnDestroy {
   cancelInvitationRequest(invitationId:string){
     this.invitationsService.cancelInvitation(invitationId).subscribe(item => {
       if(item.statusCode == 200) {
-        this.invitationsService.updateMySentInvitations()
+        this.invitationsService.updateSentInvitations()
       }
     })
   }
@@ -50,7 +50,7 @@ export class MySentInvitationsComponent implements OnInit, OnDestroy {
   reactivateMySentInvitationRequest(invitationId:string){
     this.invitationsService.reactivateMySentlInvitation(invitationId).subscribe(item => {
       if(item.statusCode == 200) {
-        this.invitationsService.updateMySentInvitations()
+        this.invitationsService.updateSentInvitations()
       }
     })
   }
@@ -58,7 +58,7 @@ export class MySentInvitationsComponent implements OnInit, OnDestroy {
   removeMySentlInvitation(invitationId:string){
     this.invitationsService.removeMySentlInvitation(invitationId).subscribe(item => {
       if(item.statusCode == 200) {
-        this.invitationsService.updateMySentInvitations()
+        this.invitationsService.updateSentInvitations()
       }
     })
   }

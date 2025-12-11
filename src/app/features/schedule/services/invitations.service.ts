@@ -10,10 +10,15 @@ export class InvitationsService {
 
   constructor(private http: HttpClient) { }
   ContactAsInviteeId!:string;
-  public needToUpdateMySentInvitations = new BehaviorSubject<any>(null);
+  public needToUpdateSentInvitations = new BehaviorSubject<any>(null);
+  public needToUpdateRecievedInvitations = new BehaviorSubject<any>(null);
 
-  updateMySentInvitations(){
-    this.needToUpdateMySentInvitations.next(true)
+  updateSentInvitations(){
+    this.needToUpdateSentInvitations.next(true)
+  }
+
+  updateRecievedInvitations(){
+    this.needToUpdateRecievedInvitations.next(true)
   }
 
   GetInvitations(searchQuery: string | null, location:string | null, approved:number | null, active:number | null, weekday:string | null, specificDate:Date | null, urgent:number | null ): Observable<GenericResponse<Invitation[]>> {
