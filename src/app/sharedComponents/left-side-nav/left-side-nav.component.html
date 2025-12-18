@@ -1,6 +1,10 @@
 <div class="side_nav_content">
     <div class="navigation">
 
+            <div *ngIf="user" class="menu_buttons" mat-menu-item routerLink="/mySchedule">
+                {{ 'my_schedule' | translate }}
+            </div>
+
             <div *ngIf="user" class="menu_buttons" mat-menu-item routerLink="/invitations">
                 {{ 'invitations' | translate }}
             </div>

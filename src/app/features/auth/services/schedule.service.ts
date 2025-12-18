@@ -12,4 +12,8 @@ export class ScheduleService {
       getUserSchedule(userId:string): Observable<GenericResponse<Invitation[]>>{
         return this.http.get<GenericResponse<Invitation[]>>(`/consoleApi/schedule/${userId}`)
       }
+
+      getMySchedule(): Observable<GenericResponse<Invitation[]>>{
+        return this.http.get<GenericResponse<Invitation[]>>(`/consoleApi/schedule/my`)
+      }
 }

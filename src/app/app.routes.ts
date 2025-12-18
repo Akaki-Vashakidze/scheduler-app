@@ -8,6 +8,7 @@ import { ResetPasswordComponent } from './features/auth/components/reset-passwor
 import { ForgetPassComponent } from './features/auth/components/forget-pass/forget-pass.component';
 import { MyRecievedInvitationsComponent } from './features/schedule/components/my-invitations/my-recieved-invitations.component';
 import { ContactScheduleComponent } from './features/schedule/components/contact-schedule/contact-schedule.component';
+import { MyScheduleComponent } from './features/schedule/components/my-schedule/my-schedule.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -18,4 +19,5 @@ export const routes: Routes = [
   { path: 'forgot-pass', component: ForgetPassComponent },
   { path: 'invitations', component: MyRecievedInvitationsComponent , canActivate: [AuthGuard] },
   { path: 'contact/schedule/:id', component: ContactScheduleComponent , canActivate: [AuthGuard] },
+  { path: 'mySchedule', component: MyScheduleComponent , canActivate: [AuthGuard] },
 ];
