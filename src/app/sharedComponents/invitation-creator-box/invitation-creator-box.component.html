@@ -17,7 +17,7 @@
         <input type="text" name="title" [value]="item.title || ''" (input)="onTitleChange($event, i)"
           [placeholder]="'addTitle' | translate" required class="invitation_title_add" />
 
-        <label class="urgent_checkbox_label">
+        <label *ngIf="!invitationForMe" class="urgent_checkbox_label">
           <input type="checkbox" [checked]="item.urgent === 1" (change)="onUrgentChange($event, i)" class="isUrgentChecbox" />
           <span>{{ 'Urgent' | translate }}</span>
         </label>
@@ -35,4 +35,5 @@
       </div>
     </div>
 
-    <div class="main_button" *ngIf="selectedSchedule.length !== 0" (click)="submit()">Send Request</div>
+    <div class="main_button" *ngIf="selectedSchedule.length !== 0 && !invitationForMe" (click)="submit()">Send Request</div>
+    <div class="main_button" *ngIf="selectedSchedule.length !== 0 && invitationForMe" (click)="saveSchedule()">save schedule</div>

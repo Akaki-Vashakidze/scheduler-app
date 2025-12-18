@@ -33,8 +33,8 @@ export class MyScheduleComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.invitationsService.needToUpdateRecievedInvitations.subscribe(item => {
         this.getUserSchedule()
-        this.sharedService.setRightSideNavContent(this.selectedItems)
-      })
+        this.sharedService.setRightSideNavContent(this.selectedItems, true)
+      })  
     );
   }
 
@@ -244,7 +244,7 @@ export class MyScheduleComponent implements OnInit, OnDestroy {
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
       );
 
-      this.sharedService.setRightSideNavContent(this.selectedItems)
+      this.sharedService.setRightSideNavContent(this.selectedItems, true)
       this.sideNavService.openRightSideNav()
       this.startTimeOrEndTime = 'start';
       return;
@@ -275,7 +275,7 @@ export class MyScheduleComponent implements OnInit, OnDestroy {
     if (this.selectedItems.length == 0) {
       this.sideNavService.closeRightSideNav()
     }
-    this.sharedService.setRightSideNavContent(this.selectedItems)
+    this.sharedService.setRightSideNavContent(this.selectedItems, true)
   }
 
   compareTimes(a: string, b: string): number {

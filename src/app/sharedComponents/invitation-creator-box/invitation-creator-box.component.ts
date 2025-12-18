@@ -19,6 +19,7 @@ import { SelectedSchedule } from '../../interfaces/shared.interface';
 export class InvitationCreatorBoxComponent implements OnDestroy {
   selectedSchedule!: SelectedSchedule[];
   errorText: string = '';
+  invitationForMe: boolean = false;
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -31,7 +32,7 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(newItems => {
         const oldItems = this.selectedSchedule || [];
-
+        this.invitationForMe = sharedService.invitationForMe;
         // Merge new items with old ones to preserve isChecked
         this.selectedSchedule = (newItems || []).map((newItem: any) => {
           // Try to find old item by unique property (e.g., day + date)
@@ -50,7 +51,6 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
       ...this.selectedSchedule[index],
       isChecked
     };
-    console.log(this.selectedSchedule);
   }
 
   onTitleChange(event: Event, index: number): void {
@@ -97,12 +97,50 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
       if (item.statusCode == 200) {
         this.selectedSchedule = [];
         this.invitationService.updateSentInvitations()
-        this.sharedService.setRightSideNavContent([])
+        this.sharedService.setRightSideNavContent([], this.invitationForMe)
         this.snackBarService.success('Invitation sent')
       }
     });
   }
 
+
+  saveSchedule(): void {
+    this.errorText = '';
+    for (let item of this.selectedSchedule) {
+      if (!item.title || !item.title.trim()) {
+        this.errorText = 'One of the invitations is missing a title!'
+        return;
+      }
+
+      if (!item.location || !item.location.trim()) {
+        this.errorText = 'One of the invitations is missing a location!'
+        return;
+      }
+    }
+
+    const data = this.selectedSchedule.map(item => ({
+      isSingleUse: item.isChecked ? 0 : 1,
+      title: item.title,
+      start: item.start || '',
+      end: item.end || '',
+      description: "test desc",
+      urgent: item.urgent,
+      weekday: item.day,
+      invitee: this.invitationService.ContactAsInviteeId,
+      location: item.location,
+      date: item.date
+    }));
+
+    this.invitationService.sendInvitation(data).subscribe(item => {
+      if (item.statusCode == 200) {
+        this.selectedSchedule = [];
+        this.invitationService.updateSentInvitations()
+        this.sharedService.setRightSideNavContent([], this.invitationForMe)
+        this.snackBarService.success('Schedule saved')
+        this.invitationService.updateRecievedInvitations()
+      }
+    });
+  }
 
   closeRightNav(): void {
     this.sideNavService.closeRightSideNav();
