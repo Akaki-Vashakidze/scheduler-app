@@ -1,0 +1,8 @@
+<div class="my-contacts">
+    <div class="my-contacts_title">My Contacts</div>
+    <div *ngIf="myContacts.length === 0" class="no_contacts_text">
+        You have no contacts yet.   
+        </div> 
+    <div *ngFor="let contact of myContacts" class="contact_item">
+        <div class="contact_name">{{ contact.contact.name + ' ' + contact.contact.surname }}</div>
+</div>
