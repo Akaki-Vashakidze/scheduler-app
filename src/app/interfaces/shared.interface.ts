@@ -123,6 +123,10 @@ export interface SendInvitation {
 export interface Team {
     leader: string,
     members: string[],
+    createdAt: string,
+    updatedAt: string,
+    title: string,
+    _id: string,
 }
 
 export interface CreateTeamData {

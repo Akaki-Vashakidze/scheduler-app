@@ -1,4 +1,5 @@
 export enum RightNavContentType {
   INVITATIONS = "INVITATIONS",
-  TEAMCREATE = "TEAMCREATE"
+  TEAMCREATE = "TEAMCREATE",
+  NONE = "NONE",
 }

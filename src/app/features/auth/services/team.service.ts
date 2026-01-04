@@ -7,14 +7,21 @@ import { CreateTeamData, GenericResponse, Team } from '../../../interfaces/share
     providedIn: 'root',
 })
 export class TeamService {
-    private teamSubject = new BehaviorSubject<any>(null);
-    public team$: Observable<any> = this.teamSubject.asObservable();
+    public updateMyTeams = new BehaviorSubject<boolean>(false);
 
     team!: any;
     constructor(private http: HttpClient) { }
 
     createTeam(data: CreateTeamData): Observable<GenericResponse<Team>> {
         return this.http.post<GenericResponse<Team>>(`/consoleApi/team/create`, data);
+    }
+
+    getMyTeams(): Observable<GenericResponse<Team[]>> {
+        return this.http.get<GenericResponse<Team[]>>(`/consoleApi/team/my-teams`);
+    }
+
+    doUpdateMyTeams(bool: boolean) {
+        this.updateMyTeams.next(bool);
     }
 
 }

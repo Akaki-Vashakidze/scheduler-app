@@ -12,8 +12,8 @@ export class SharedService {
   public invitationForMe: boolean = false;
   
   setRightSideNavContent(body:any, type:string){
-    this.invitationForMe = body.forMe;
+    this.invitationForMe = body?.forMe || false;
     this.rightSideNavChosenSchedulHelper = body;
     this.rightSideNavChosenSchedulHelper$.next({...body, type});
   }
-} 
+}

@@ -1,0 +1,41 @@
+<div class="teams-container">
+  <div class="teams-header">
+    <div>
+      <h1>My Teams</h1>
+      <p class="subtitle">You are a leader of {{ myTeams.length }} teams</p>
+    </div>
+    <button class="create-btn" (click)="openCreateTeamNav()">
+      + New Team
+    </button>
+  </div>
+
+  <div class="teams-grid" *ngIf="myTeams.length > 0; else noTeams">
+    <div class="team-card" *ngFor="let team of myTeams">
+      <div class="card-content">
+        <div class="team-badge">Team</div>
+        <h2 class="team-title">{{ team.title || 'General Team' }}</h2>
+        
+        <div class="team-stats">
+          <div class="stat">
+            <span class="label">Members:</span>
+            <span class="value">{{ team.members.length || 0 }}</span>
+          </div>
+          <div class="stat">
+            <span class="label">Created:</span>
+            <span class="value">{{ team.createdAt | date:'mediumDate' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <button class="action-btn view">Manage Members</button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noTeams>
+    <div class="empty-state">
+      <p>No teams found. Start by creating your first team.</p>
+    </div>
+  </ng-template>
+</div>

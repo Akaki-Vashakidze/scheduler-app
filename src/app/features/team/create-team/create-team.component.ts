@@ -20,8 +20,6 @@ export class CreateTeamComponent implements OnInit {
   searchTerm: string = '';
   title: string = '';
 
-  @Output() onSaved = new EventEmitter<void>();
-
   constructor(
     private usersService: UsersService,
     private snackbarService: SnackbarService,
@@ -87,7 +85,7 @@ export class CreateTeamComponent implements OnInit {
         if (response.statusCode === 200 || response.statusCode === 201) {
           this.snackbarService.success('Team created successfully');
           this.resetForm();
-          this.onSaved.emit(); 
+          this.teamService.doUpdateMyTeams(true);
         } else {
           this.snackbarService.error(response.errors || 'Error creating team');
         }

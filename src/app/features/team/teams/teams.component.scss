@@ -1,0 +1,105 @@
+.teams-container {
+  padding: 24px;
+  background-color: #fcfcfd;
+  min-height: 100vh;
+
+  .teams-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+
+    h1 { font-size: 24px; color: #101828; margin: 0; }
+    .subtitle { color: #667085; margin: 4px 0 0; }
+
+    .create-btn {
+      background-color: #7f56d9;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover { background-color: #6941c6; }
+    }
+  }
+
+  .teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .team-card {
+    background: white;
+    border: 1px solid #eaecf0;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px rgba(16, 24, 40, 0.1);
+    transition: box-shadow 0.2s;
+
+    &:hover { box-shadow: 0 10px 15px -3px rgba(16, 24, 40, 0.1); }
+
+    .card-content {
+      padding: 24px;
+      flex-grow: 1;
+
+      .team-badge {
+        display: inline-block;
+        background: #f9f5ff;
+        color: #7f56d9;
+        font-size: 12px;
+        font-weight: 500;
+        padding: 2px 8px;
+        border-radius: 16px;
+        margin-bottom: 12px;
+      }
+
+      .team-title {
+        font-size: 18px;
+        color: #101828;
+        margin: 0 0 16px 0;
+      }
+
+      .team-stats {
+        .stat {
+          display: flex;
+          justify-content: space-between;
+          font-size: 14px;
+          margin-bottom: 8px;
+          .label { color: #667085; }
+          .value { color: #344054; font-weight: 500; }
+        }
+      }
+    }
+
+    .card-actions {
+      border-top: 1px solid #eaecf0;
+      padding: 12px 24px;
+
+      .action-btn {
+        width: 100%;
+        background: none;
+        border: 1px solid #d0d5dd;
+        border-radius: 8px;
+        padding: 8px;
+        color: #344054;
+        font-weight: 600;
+        cursor: pointer;
+        &:hover { background: #f9fafb; }
+      }
+    }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px;
+    background: #fff;
+    border: 2px dashed #eaecf0;
+    border-radius: 12px;
+    color: #667085;
+  }
+}

@@ -309,5 +309,6 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.sharedService.setRightSideNavContent(null, RightNavContentType.NONE);
   }
 }
