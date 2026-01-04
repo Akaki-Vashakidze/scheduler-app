@@ -3,10 +3,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { InvitationsService } from '../../features/schedule/services/invitations.service';
 import { Invitation } from '../../interfaces/shared.interface';
 import { Subject, takeUntil } from 'rxjs';
+import { TimeFormatPipe } from "../../pipes/time-format.pipe";
 
 @Component({
   selector: 'app-my-sent-invitations',
-  imports: [CommonModule],
+  imports: [CommonModule, TimeFormatPipe],
   templateUrl: './my-sent-invitations.component.html',
   styleUrl: './my-sent-invitations.component.scss'
 })
@@ -27,7 +28,7 @@ export class MySentInvitationsComponent implements OnInit, OnDestroy {
   }
 
   getMySentInvitations(): void {
-    this.invitationsService.GetMySentInvitations('Pool A', 1, 0, 0)
+    this.invitationsService.GetMySentInvitations('', 1, 0, 0)
       .pipe(takeUntil(this.destroy$))
       .subscribe(item => {
         this.mySentInvitations = item.result.data;

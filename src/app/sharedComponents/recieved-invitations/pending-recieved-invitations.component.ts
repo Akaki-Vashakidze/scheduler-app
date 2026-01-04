@@ -4,9 +4,10 @@ import { InvitationsService } from '../../features/schedule/services/invitations
 import { Invitation } from '../../interfaces/shared.interface';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { SnackbarService } from '../../features/auth/services/snack-bar.service';
+import { TimeFormatPipe } from "../../pipes/time-format.pipe";
 @Component({
   selector: 'app-pending-recieved-invitations',
-  imports: [CommonModule],
+  imports: [CommonModule, TimeFormatPipe],
   templateUrl: './pending-recieved-invitations.component.html',
   styleUrl: './pending-recieved-invitations.component.scss'
 })

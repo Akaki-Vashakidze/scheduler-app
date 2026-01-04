@@ -33,7 +33,8 @@ export class MyScheduleComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.invitationsService.needToUpdateRecievedInvitations.subscribe(item => {
         this.getUserSchedule()
-        this.sharedService.setRightSideNavContent(this.selectedItems, true)
+        this.selectedItems = []
+        this.sideNavService.closeRightSideNav()
       })  
     );
   }
@@ -78,6 +79,8 @@ export class MyScheduleComponent implements OnInit, OnDestroy {
           return e;
         }
       });
+
+        console.log(this.generateTimeline({ ...day, events: matchedEvents }))
       return {
         ...day,
         events: matchedEvents,

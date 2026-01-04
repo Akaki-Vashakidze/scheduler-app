@@ -15,7 +15,11 @@
             <div class="my-sent-invitations_date" *ngIf="!invitation.isSingleUse">
                 {{ invitation.weekday }}
             </div>
-            <div class="my-sent-invitations_time">{{invitation.start + ' - ' + invitation.end}}</div>
+            <div class="my-sent-invitations_time">
+            {{ invitation.startHour | timeFormat:invitation.startMinute }}
+            -
+            {{ invitation.endHour | timeFormat:invitation.endMinute }}
+            </div>  
             <div class="my-sent-invitations_actions">
                 <div class="main_button_small" (click)="acceptInvitation(invitation._id)">Accept</div>
                 <div class="main_button_small" (click)="declineInvitation(invitation._id)">decline</div>

@@ -31,18 +31,27 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
     this.sharedService.rightSideNavChosenSchedulHelper$
       .pipe(takeUntil(this.destroy$))
       .subscribe(newItems => {
+        this.invitationForMe = this.sharedService.invitationForMe;
+
+        if (!newItems || newItems.length === 0) {
+          this.selectedSchedule = [];
+          return;
+        }
+
         const oldItems = this.selectedSchedule || [];
-        this.invitationForMe = sharedService.invitationForMe;
-        // Merge new items with old ones to preserve isChecked
-        this.selectedSchedule = (newItems || []).map((newItem: any) => {
-          // Try to find old item by unique property (e.g., day + date)
-          const oldItem = oldItems.find(i => i.day === newItem.day && i.date === newItem.date);
+
+        this.selectedSchedule = newItems.map((newItem: any) => {
+          const oldItem = oldItems.find(
+            i => i.day === newItem.day && i.date === newItem.date
+          );
+
           return {
             ...newItem,
-            isChecked: oldItem ? oldItem.isChecked : false
+            isChecked: oldItem?.isChecked ?? false
           };
         });
       });
+
   }
 
   onCheckboxChange(event: Event, index: number): void {
@@ -79,12 +88,16 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
         return;
       }
     }
-
+    
     const data = this.selectedSchedule.map(item => ({
       isSingleUse: item.isChecked ? 0 : 1,
       title: item.title,
-      start: item.start || '',
-      end: item.end || '',
+
+      startHour: Number(item.start?.split(':')[0] ?? 0),
+      endHour: Number(item.end?.split(':')[0] ?? 0),
+      startMinute: Number(item.start?.split(':')[1] ?? 0),
+      endMinute: Number(item.end?.split(':')[1] ?? 0),
+
       description: "test desc",
       urgent: item.urgent,
       weekday: item.day,
@@ -117,12 +130,14 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
         return;
       }
     }
-
+    
     const data = this.selectedSchedule.map(item => ({
       isSingleUse: item.isChecked ? 0 : 1,
       title: item.title,
-      start: item.start || '',
-      end: item.end || '',
+      startHour: parseInt(item.start?.split(':')[0] || '0', 10),
+      endHour: parseInt(item.end?.split(':')[0] || '0', 10),
+      startMinute: parseInt(item.start?.split(':')[1] || '0', 10),
+      endMinute: parseInt(item.end?.split(':')[1] || '0', 10),
       description: "test desc",
       urgent: item.urgent,
       weekday: item.day,
