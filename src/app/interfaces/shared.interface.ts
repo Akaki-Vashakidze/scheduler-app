@@ -119,3 +119,13 @@ export interface SendInvitation {
   isSingleUse:number,
   date:Date
 }
+
+export interface Team {
+    leader: string,
+    members: string[],
+}
+
+export interface CreateTeamData {
+    title: string,
+    members: string[],
+}

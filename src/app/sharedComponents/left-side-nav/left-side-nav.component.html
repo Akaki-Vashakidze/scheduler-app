@@ -9,6 +9,10 @@
                 {{ 'invitations' | translate }}
             </div>
 
+            <div *ngIf="user" class="menu_buttons"  mat-menu-item routerLink="/teams">
+                {{ 'teams' | translate }}
+            </div>
+
             <div *ngIf="user" class="menu_buttons"  mat-menu-item routerLink="/account">
                 {{ 'Account' | translate }}
             </div>

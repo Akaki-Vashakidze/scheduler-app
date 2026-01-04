@@ -9,10 +9,12 @@ import { ForgetPassComponent } from './features/auth/components/forget-pass/forg
 import { MyRecievedInvitationsComponent } from './features/schedule/components/my-invitations/my-recieved-invitations.component';
 import { ContactScheduleComponent } from './features/schedule/components/contact-schedule/contact-schedule.component';
 import { MyScheduleComponent } from './features/schedule/components/my-schedule/my-schedule.component';
+import { TeamsComponent } from './features/team/teams/teams.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'signup', component: SignupComponent },
+  { path: 'teams', component: TeamsComponent },
   { path: 'reset-password', component: ResetPasswordComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'account', component: AccountInfoComponent, canActivate: [AuthGuard] },

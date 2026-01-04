@@ -1,8 +1,33 @@
-<div class="my-contacts">
-    <div class="my-contacts_title">My Contacts</div>
-    <div *ngIf="myContacts.length === 0" class="no_contacts_text">
-        You have no contacts yet.   
-        </div> 
-    <div *ngFor="let contact of myContacts" class="contact_item">
-        <div class="contact_name">{{ contact.contact.name + ' ' + contact.contact.surname }}</div>
+<div class="team-builder-container">
+    <div class="team-title">
+        <input type="text" [(ngModel)]="title" placeholder="Team title" class="title-input">
+    </div>
+
+    <div class="search-section">
+        <input type="text" [(ngModel)]="searchTerm" placeholder="Search contacts..." class="search-input">
+    </div>
+    <div class="columns-wrapper">
+        <div class="column">
+            <h3>My Contacts</h3>
+            <div *ngIf="filteredContacts.length === 0" class="empty-msg">No contacts found.</div>
+            <div *ngFor="let contact of filteredContacts" class="list-item" (click)="addToTeam(contact)">
+                {{ contact.contact.name }} {{ contact.contact.surname }}
+                <span class="plus-icon">+</span>
+            </div>
+        </div>
+
+        <div class="column">
+            <h3>Team Members ({{ teamMembers.length }})</h3>
+            <div *ngIf="teamMembers.length === 0" class="empty-msg">No members selected.</div>
+            <div *ngFor="let member of teamMembers" class="list-item selected" (click)="removeFromTeam(member)">
+                {{ member.contact.name }} {{ member.contact.surname }}
+                <span class="minus-icon">×</span>
+            </div>
+        </div>
+    </div>
+    <div class="actions-section">
+        <button class="save-btn" [disabled]="teamMembers.length === 0" (click)="saveTeam()">
+            Create Team ({{ teamMembers.length }} Members)
+        </button>
+    </div>
 </div>

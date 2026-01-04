@@ -12,7 +12,6 @@ export class SharedService {
   public invitationForMe: boolean = false;
   
   setRightSideNavContent(body:any, forMe:boolean){
-    console.log(body, forMe);
     this.invitationForMe = forMe;
     this.rightSideNavChosenSchedulHelper = body;
     this.rightSideNavChosenSchedulHelper$.next(body)
