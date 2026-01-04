@@ -11,9 +11,9 @@ export class SharedService {
   public rightSideNavChosenSchedul$: Observable<any> = this.rightSideNavChosenSchedulHelper$.asObservable();
   public invitationForMe: boolean = false;
   
-  setRightSideNavContent(body:any, forMe:boolean){
-    this.invitationForMe = forMe;
+  setRightSideNavContent(body:any, type:string){
+    this.invitationForMe = body.forMe;
     this.rightSideNavChosenSchedulHelper = body;
-    this.rightSideNavChosenSchedulHelper$.next(body)
+    this.rightSideNavChosenSchedulHelper$.next({...body, type});
   }
 } 

@@ -5,7 +5,8 @@
   </div>
 
   <div class="right_side_nav_content_body">
-    <app-invitation-creator-box></app-invitation-creator-box>
+    <app-invitation-creator-box *ngIf="contentType === 'INVITATIONS'"></app-invitation-creator-box>
+    <app-create-team *ngIf="contentType === 'TEAMCREATE'"></app-create-team>
     <hr>
     <app-my-sent-invitations></app-my-sent-invitations>
     <app-pending-recieved-invitations></app-pending-recieved-invitations>

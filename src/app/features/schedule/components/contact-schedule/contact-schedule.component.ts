@@ -7,6 +7,7 @@ import { SideNavsService } from '../../../auth/services/side-navs.service';
 import { SharedService } from '../../../auth/services/shared.service';
 import { Subscription } from 'rxjs';
 import { InvitationsService } from '../../services/invitations.service';
+import { RightNavContentType } from '../../../../enums/shared.enums';
 
 @Component({
   selector: 'app-contact-schedule',
@@ -247,7 +248,7 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
       );
 
-      this.sharedService.setRightSideNavContent(this.selectedItems, false);
+      this.sharedService.setRightSideNavContent({invitations:this.selectedItems, forMe:false}, RightNavContentType.INVITATIONS);
       this.sideNavService.openRightSideNav()
       this.startTimeOrEndTime = 'start';
       return;
@@ -278,7 +279,7 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
     if (this.selectedItems.length == 0) {
       this.sideNavService.closeRightSideNav()
     }
-    this.sharedService.setRightSideNavContent(this.selectedItems, false)
+    this.sharedService.setRightSideNavContent({invitations:this.selectedItems, forMe:false}, RightNavContentType.INVITATIONS)
   }
 
   compareTimes(a: string, b: string): number {

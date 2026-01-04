@@ -8,6 +8,7 @@ import { SideNavsService } from '../../features/auth/services/side-navs.service'
 import { SnackbarService } from '../../features/auth/services/snack-bar.service';
 import { InvitationsService } from '../../features/schedule/services/invitations.service';
 import { SelectedSchedule } from '../../interfaces/shared.interface';
+import { RightNavContentType } from '../../enums/shared.enums';
 
 
 @Component({
@@ -33,14 +34,14 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
       .subscribe(newItems => {
         this.invitationForMe = this.sharedService.invitationForMe;
 
-        if (!newItems || newItems.length === 0) {
+        if (!newItems.invitations || newItems.invitations.length === 0) {
           this.selectedSchedule = [];
           return;
         }
 
         const oldItems = this.selectedSchedule || [];
 
-        this.selectedSchedule = newItems.map((newItem: any) => {
+        this.selectedSchedule = newItems.invitations.map((newItem: any) => {
           const oldItem = oldItems.find(
             i => i.day === newItem.day && i.date === newItem.date
           );
@@ -110,7 +111,7 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
       if (item.statusCode == 200) {
         this.selectedSchedule = [];
         this.invitationService.updateSentInvitations()
-        this.sharedService.setRightSideNavContent([], this.invitationForMe)
+        this.sharedService.setRightSideNavContent({invitations:[],forMe:this.invitationForMe},RightNavContentType.INVITATIONS)
         this.snackBarService.success('Invitation sent')
       }
     });
@@ -150,7 +151,7 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
       if (item.statusCode == 200) {
         this.selectedSchedule = [];
         this.invitationService.updateSentInvitations()
-        this.sharedService.setRightSideNavContent([], this.invitationForMe)
+        this.sharedService.setRightSideNavContent({invitations:[],forMe:this.invitationForMe},RightNavContentType.INVITATIONS)
         this.snackBarService.success('Schedule saved')
         this.invitationService.updateRecievedInvitations()
       }

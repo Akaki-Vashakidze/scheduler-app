@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SharedService } from '../../../auth/services/shared.service';
 import { SideNavsService } from '../../../auth/services/side-navs.service';
 import { ScheduleService } from '../../../auth/services/schedule.service';
+import { RightNavContentType } from '../../../../enums/shared.enums';
 
 @Component({
   selector: 'app-my-schedule',
@@ -80,7 +81,6 @@ export class MyScheduleComponent implements OnInit, OnDestroy {
         }
       });
 
-        console.log(this.generateTimeline({ ...day, events: matchedEvents }))
       return {
         ...day,
         events: matchedEvents,
@@ -247,7 +247,7 @@ export class MyScheduleComponent implements OnInit, OnDestroy {
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
       );
 
-      this.sharedService.setRightSideNavContent(this.selectedItems, true)
+      this.sharedService.setRightSideNavContent({invitations:this.selectedItems, forMe:true}, RightNavContentType.INVITATIONS);
       this.sideNavService.openRightSideNav()
       this.startTimeOrEndTime = 'start';
       return;
@@ -278,7 +278,7 @@ export class MyScheduleComponent implements OnInit, OnDestroy {
     if (this.selectedItems.length == 0) {
       this.sideNavService.closeRightSideNav()
     }
-    this.sharedService.setRightSideNavContent(this.selectedItems, true)
+    this.sharedService.setRightSideNavContent({invitations:this.selectedItems, forMe:true}, RightNavContentType.INVITATIONS)
   }
 
   compareTimes(a: string, b: string): number {
