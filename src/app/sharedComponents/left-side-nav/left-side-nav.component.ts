@@ -8,10 +8,11 @@ import { Subject, takeUntil } from 'rxjs';
 import { SentContactRequestsComponent } from "../sentt-contact-requests/sent-contact-requests.component";
 import { RecievedContactRequestsComponent } from "../recieved-contact-requests/recieved-contact-requests.component";
 import { MyContactsListComponent } from "../my-contacts-list/my-contacts-list.component";
+import { MyTeamsSideNavComponent } from "../my-teams-side-nav/my-teams-side-nav.component";
 
 @Component({
   selector: 'app-left-side-nav',
-  imports: [TranslateModule, RouterLink, MyContactsListComponent, CommonModule, RecievedContactRequestsComponent, SentContactRequestsComponent, RecievedContactRequestsComponent, MyContactsListComponent],
+  imports: [TranslateModule, RouterLink, MyContactsListComponent, CommonModule, RecievedContactRequestsComponent, SentContactRequestsComponent, RecievedContactRequestsComponent, MyContactsListComponent, MyTeamsSideNavComponent],
   templateUrl: './left-side-nav.component.html',
   styleUrls: ['./left-side-nav.component.scss']
 })

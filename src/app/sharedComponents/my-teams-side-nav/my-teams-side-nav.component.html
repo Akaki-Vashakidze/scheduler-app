@@ -1,0 +1,30 @@
+<div class="my_teams">
+    <div class="hLine"></div>
+    <h5>My Teams</h5>
+    <div class="teams-container">
+        <div *ngFor="let team of myTeams" class="my_teams_item">
+            <div>{{ team.title }}</div>
+
+            <mat-icon [matMenuTriggerFor]="teamMenu">more_vert</mat-icon>
+
+
+            <mat-menu #teamMenu="matMenu">
+
+                <button mat-menu-item (click)="inviteTeammates(team._id)">
+                    <mat-icon>person_add</mat-icon>
+                    <span>Invite</span>
+                </button>
+
+                <button mat-menu-item [routerLink]="'team/schedule/' + team._id">
+                    <mat-icon>event</mat-icon>
+                    <span>Schedule</span>
+                </button>
+
+                <button mat-menu-item (click)="deleteTeam(team._id)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete</span>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+</div>

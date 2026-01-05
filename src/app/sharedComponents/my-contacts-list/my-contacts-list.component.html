@@ -1,26 +1,26 @@
 <div class="my_contacts">
-    <div class="hLine"></div>
-  <div *ngFor="let contact of myContacts" class="my_contacts_item">
-    <div>{{ contact.contact.email }}</div>
-
+  <div class="hLine"></div>
+  <h5>My Contacts</h5>
+  <div class="contacts-container">
+    <div *ngFor="let contact of myContacts" class="my_contacts_item">
+      <div>{{ contact.contact.email }}</div>
       <mat-icon [matMenuTriggerFor]="contactMenu">more_vert</mat-icon>
+      <mat-menu #contactMenu="matMenu">
+        <button mat-menu-item (click)="deleteContact(contact)">
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
 
+        <button mat-menu-item [routerLink]="'contact/schedule/' + contact.contact._id">
+          <mat-icon>event</mat-icon>
+          <span>Schedule</span>
+        </button>
 
-    <mat-menu #contactMenu="matMenu">
-      <button mat-menu-item (click)="deleteContact(contact)">
-        <mat-icon>delete</mat-icon>
-        <span>Delete</span>
-      </button>
-
-    <button mat-menu-item [routerLink]="'contact/schedule/' + contact.contact._id">
-        <mat-icon>event</mat-icon>
-        <span>Schedule</span>
-      </button>
-
-      <button mat-menu-item (click)="inviteContact(contact)">
-        <mat-icon>person_add</mat-icon>
-        <span>Invite</span>
-      </button>
-    </mat-menu>
+        <button mat-menu-item (click)="inviteContact(contact)">
+          <mat-icon>person_add</mat-icon>
+          <span>Invite</span>
+        </button>
+      </mat-menu>
+    </div>
   </div>
 </div>
