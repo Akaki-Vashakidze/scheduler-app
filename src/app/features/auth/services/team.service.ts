@@ -24,4 +24,15 @@ export class TeamService {
         this.updateMyTeams.next(bool);
     }
 
+    removeMemberFromMyTeam(teamId: string, memberId: string): Observable<GenericResponse<Team>> {
+        return this.http.delete<GenericResponse<Team>>(`/consoleApi/team/${teamId}/remove-member/${memberId}`,{});
+    }
+
+    addMembersToTeam(teamId: string, memberId: string): Observable<GenericResponse<Team>> {
+        return this.http.post<GenericResponse<Team>>(`/consoleApi/team/${teamId}/add-members/${memberId}`,{});
+    }   
+
+    giveLeaderShipToMember(teamId: string, newLeaderId: string): Observable<GenericResponse<Team>> {
+        return this.http.post<GenericResponse<Team>>(`/consoleApi/team/${teamId}/giveLeaderShip/${newLeaderId}`,{});
+    }   
 }

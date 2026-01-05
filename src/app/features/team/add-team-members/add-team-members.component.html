@@ -1,0 +1,8 @@
+            <div class="add-members">
+                <div class="contacts-list">
+                    <div class="contact" *ngFor="let contact of myContacts | slice:0:3">
+                        <div>{{ contact.contact.name }} {{ contact.contact.surname }}</div>
+                        <mat-icon (click)="addMemberToTeam(contact.contact._id)">add</mat-icon>
+                    </div>
+                </div>
+            </div>

@@ -24,7 +24,6 @@ export class RightSideNavComponent implements OnDestroy {
     this.sharedService.rightSideNavChosenSchedulHelper$
           .pipe(takeUntil(this.destroy$))
           .subscribe(newItems => {
-            console.log('RightSideNavComponent - newItems:', newItems);
             this.contentType = newItems.type;
           });
   }

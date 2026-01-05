@@ -121,8 +121,8 @@ export interface SendInvitation {
 }
 
 export interface Team {
-    leader: string,
-    members: string[],
+    leader: User,
+    members: User[],
     createdAt: string,
     updatedAt: string,
     title: string,

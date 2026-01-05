@@ -79,8 +79,9 @@
     .card-actions {
       border-top: 1px solid #eaecf0;
       padding: 12px 24px;
+    }
 
-      .action-btn {
+    .action-btn {
         width: 100%;
         background: none;
         border: 1px solid #d0d5dd;
@@ -91,7 +92,6 @@
         cursor: pointer;
         &:hover { background: #f9fafb; }
       }
-    }
   }
 
   .empty-state {
@@ -102,4 +102,36 @@
     border-radius: 12px;
     color: #667085;
   }
+}
+
+.members {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    .member-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .member {
+        padding: 5px 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f9f9f9;
+    }
+}
+
+.add-members {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
