@@ -66,8 +66,6 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
         fullDate: new Date(currentDate.toISOString())  // ← ISO DATE HERE
       });
     }
-
-    // this.invitationsService.sendInvitation()
   }
 
   mergeDaysWithEvents(days: any[], events: any[]) {
@@ -85,7 +83,6 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
       return {
         ...day,
         events: matchedEvents,
-        // generate fresh timeline for the day (safe)
         timeline: this.generateTimeline({ ...day, events: matchedEvents })
       };
     });
@@ -124,7 +121,6 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
   chooseTime(slot: any, nextSlot: any, day: any) {
     if (!nextSlot || slot.event || slot.selected) return;
 
-    // hide any other mini slots for this day
     this.hideMiniSlotsEverywhere(day);
 
     slot.showMiniSlots = true;
@@ -145,22 +141,18 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
   selectMiniSlot(mainSlot: any, mini: any, event: MouseEvent, day: any) {
     event.stopPropagation();
 
-    // ensure daySelection exists
     let daySelection = this.selectedItems?.find((d: any) => d.date.getTime() === day.fullDate.getTime());
     if (!daySelection) {
       daySelection = { day: day.weekday, date: day.fullDate, start: null, end: null, title: '', description: '', urgent: 0, location: '' };
       this.selectedItems.push(daySelection);
     }
 
-    // If selecting start while start exists -> ask to reset
     if (this.startTimeOrEndTime === 'start' && daySelection.start) {
       if (!confirm('A start time already exists for this day. Reset?')) return;
 
-      // reset selection for the day
       daySelection.start = null;
       daySelection.end = null;
 
-      // clear visual flags
       day.timeline.forEach((slot: any) => {
         slot.selected = false;
         slot.isStart = false;
@@ -176,9 +168,7 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
       });
     }
 
-    // SELECT START
     if (this.startTimeOrEndTime === 'start') {
-      // reset mini flags in this main slot
       if (Array.isArray(mainSlot.miniSlots)) {
         mainSlot.miniSlots.forEach((m: any) => {
           m.selected = false;
@@ -188,11 +178,9 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
         });
       }
 
-      // mark clicked mini as start
       mini.selected = true;
       mini.isStart = true;
 
-      // update main slot visual/time
       mainSlot.time = mini.time;
       mainSlot.selected = true;
       mainSlot.isStart = true;
@@ -205,7 +193,6 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // SELECT END
     if (this.startTimeOrEndTime === 'end') {
       if (!daySelection.start) return;
       if (this.compareTimes(mini.time, daySelection.start) < 0) {
@@ -217,17 +204,14 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
       const startTime = daySelection.start;
       const endTime = daySelection.end;
 
-      // mark main slots + mini slots in range
       day.timeline.forEach((slot: any) => {
         const slotStart = slot.time;
-        // determine slot end using its miniSlots last item if exists
         const slotEnd = (Array.isArray(slot.miniSlots) && slot.miniSlots.length)
           ? slot.miniSlots[slot.miniSlots.length - 1].time
           : slot.time;
 
         const inRange = this.compareTimes(slotEnd, startTime) >= 0 && this.compareTimes(slotStart, endTime ?? '') <= 0;
         slot.selected = inRange;
-        // main slot isStart/isEnd if its time or its miniSlots contain the start/end
         slot.isStart = slot.time === startTime || (Array.isArray(slot.miniSlots) && slot.miniSlots.some((m: any) => m.time === startTime));
         slot.isEnd = slot.time === endTime || (Array.isArray(slot.miniSlots) && slot.miniSlots.some((m: any) => m.time === endTime));
 
@@ -241,7 +225,6 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
           });
         }
 
-        // keep mini slots visible for affected slots until user resets or cancels
         if (inRange) slot.showMiniSlots = true;
       });
       this.selectedItems = [...this.selectedItems].sort(
@@ -256,20 +239,14 @@ export class ContactScheduleComponent implements OnInit, OnDestroy {
   }
 
   cancelChosenSlots(day: any) {
-    // remove from selectedItems
     const index = this.selectedItems.findIndex((d: any) => d.date.getTime() === day.fullDate.getTime());
     if (index !== -1) this.selectedItems.splice(index, 1);
 
-    // restore the timeline to its original hourly intervals and clear flags
-    // regenerate the timeline for the day using its events (this restores proper times)
     const matchedEvents = (day.events || []);
     const freshTimeline = this.generateTimeline({ ...day, events: matchedEvents });
 
-    // replace day's timeline with fresh timeline
     day.timeline = freshTimeline;
 
-    // reset flags on new timeline entries (generateTimeline already initializes flags)
-    // ensure no miniSlots are present
     day.timeline.forEach((slot: any) => {
       slot.showMiniSlots = false;
       slot.miniSlots = [];

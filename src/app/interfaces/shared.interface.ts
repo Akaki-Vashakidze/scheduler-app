@@ -37,6 +37,7 @@ export interface Invitation {
     record: Record,
     date?:Date,
     isSingleUse:number,
+    scheduleMembers?:User[]
 }
 
 export interface GenericResponse<T> {

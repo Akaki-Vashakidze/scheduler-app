@@ -1,14 +1,11 @@
 <div class="calendar_container">
   <div class="calendar_day-item" *ngFor="let day of calendarDays">
-    <!-- Day Header -->
     <div class="calendar_day-item-header">
       {{ day.weekday }} {{ day.date }} {{ day.month }}
     </div>
 
-    <!-- Timeline -->
     <div class="calendar_day-item-timeLine">
       <ng-container *ngFor="let slot of day.timeline; let i = index">
-        <!-- Main Slot -->
         <div
           class="slot"
           (click)="chooseTime(slot, day.timeline[i+1], day)"
@@ -34,7 +31,6 @@
           <div *ngIf="slot.selected" class="padding6 cancel_time" (click)="cancelChosenSlots(day)">X</div>
         </div>
 
-        <!-- Mini Slots -->
         <div *ngIf="slot.showMiniSlots" class="mini-slots-container">
           <div
             *ngFor="let mini of slot.miniSlots"

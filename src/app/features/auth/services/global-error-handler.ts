@@ -10,10 +10,6 @@ export class GlobalErrorHandler implements ErrorHandler {
         if(error.error.message) {
             this.snackBarService.error(error.error.message[0].split('.0.')[1] + '. ')
         }
-        // this.zone.run(() => {
-        //   console.log('Global Error Handler:', error.message[0]);
-        //   alert(error.message);
-        // });
     }
 }
 
