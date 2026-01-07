@@ -57,6 +57,10 @@ export class InvitationsService {
     return this.http.post<GenericResponse<any>>(`/consoleApi/invitation/invite`,{invitations:data});
   }
 
+  sendTeamInvitation(data:SendInvitation[]){
+    return this.http.post<GenericResponse<any>>(`/consoleApi/invitation/inviteTeam`,{invitations:data});
+  }
+
   GetMySentInvitations( location:string | null, active:number | null, urgent:number | null , approved:number | null ): Observable<GenericResponse<Invitation[]>> {
     let body : {location?: string, active?: number, urgent?: number, approved?: number} = {};
     location != null ? body.location = location : null;

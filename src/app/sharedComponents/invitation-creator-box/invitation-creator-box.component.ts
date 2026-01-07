@@ -9,6 +9,7 @@ import { SnackbarService } from '../../features/auth/services/snack-bar.service'
 import { InvitationsService } from '../../features/schedule/services/invitations.service';
 import { SelectedSchedule } from '../../interfaces/shared.interface';
 import { RightNavContentType } from '../../enums/shared.enums';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -21,14 +22,17 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
   selectedSchedule!: SelectedSchedule[];
   errorText: string = '';
   invitationForMe: boolean = false;
+  invitationIsForTeam:boolean = false;
   private destroy$ = new Subject<void>();
 
   constructor(
     private sharedService: SharedService,
     private sideNavService: SideNavsService,
     private invitationService: InvitationsService,
-    private snackBarService: SnackbarService
+    private snackBarService: SnackbarService,
+    private router: Router
   ) {
+    this.checkIfTeamRoute();
     this.sharedService.rightSideNavChosenSchedulHelper$
       .pipe(takeUntil(this.destroy$))
       .subscribe(newItems => {
@@ -53,6 +57,17 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
         });
       });
 
+  }
+
+  private checkIfTeamRoute(): void {
+    const urlSegments = this.router.url.split('/').filter(Boolean);
+    const isTeamRoute = urlSegments.includes('team');
+
+    console.log('Is team route:', isTeamRoute);
+
+    if (isTeamRoute) {
+      this.invitationIsForTeam = true;
+    }
   }
 
   onCheckboxChange(event: Event, index: number): void {
@@ -107,14 +122,26 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
       date: item.date
     }));
 
-    this.invitationService.sendInvitation(data).subscribe(item => {
-      if (item.statusCode == 200) {
-        this.selectedSchedule = [];
-        this.invitationService.updateSentInvitations()
-        this.sharedService.setRightSideNavContent({invitations:[],forMe:this.invitationForMe},RightNavContentType.INVITATIONS)
-        this.snackBarService.success('Invitation sent')
-      }
-    });
+    if(!this.invitationIsForTeam) {
+      this.invitationService.sendInvitation(data).subscribe(item => {
+        if (item.statusCode == 200) {
+          this.selectedSchedule = [];
+          this.invitationService.updateSentInvitations()
+          this.sharedService.setRightSideNavContent({invitations:[],forMe:this.invitationForMe},RightNavContentType.INVITATIONS)
+          this.snackBarService.success('Invitation sent')
+        }
+      });
+    } else {
+      this.invitationService.sendTeamInvitation(data).subscribe(item => {
+        if (item.statusCode == 200) {
+          this.selectedSchedule = [];
+          this.invitationService.updateSentInvitations()
+          this.sharedService.setRightSideNavContent({invitations:[],forMe:this.invitationForMe},RightNavContentType.INVITATIONS)
+          this.snackBarService.success('Invitation sent')
+        }
+      });
+    }
+
   }
 
 

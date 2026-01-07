@@ -44,7 +44,6 @@ export class TeamScheduleComponent implements OnInit, OnDestroy {
     this.scheduleService.getTeamSchedule(this.userId ?? '').subscribe(item => {
       this.invitationsService.ContactAsInviteeId = this.userId || '';
       this.userSchedule = item.result.data || [];
-      console.log(this.userSchedule)
       this.generateDays();
       this.calendarDays = this.mergeDaysWithEvents(this.daysArray, this.userSchedule);
     })
