@@ -10,6 +10,7 @@ import { MyRecievedInvitationsComponent } from './features/schedule/components/m
 import { ContactScheduleComponent } from './features/schedule/components/contact-schedule/contact-schedule.component';
 import { MyScheduleComponent } from './features/schedule/components/my-schedule/my-schedule.component';
 import { TeamsComponent } from './features/team/teams/teams.component';
+import { TeamScheduleComponent } from './features/schedule/components/team-schedule/team-schedule.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -21,5 +22,6 @@ export const routes: Routes = [
   { path: 'forgot-pass', component: ForgetPassComponent },
   { path: 'invitations', component: MyRecievedInvitationsComponent , canActivate: [AuthGuard] },
   { path: 'contact/schedule/:id', component: ContactScheduleComponent , canActivate: [AuthGuard] },
+  { path: 'team/schedule/:id', component: TeamScheduleComponent , canActivate: [AuthGuard] },
   { path: 'mySchedule', component: MyScheduleComponent , canActivate: [AuthGuard] },
 ];

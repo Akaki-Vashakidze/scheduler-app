@@ -57,6 +57,31 @@ export class ScheduleService {
           );
       }
 
+      getTeamSchedule(teamId:string){
+        return this.http
+          .get<GenericResponse<Invitation[]>>(`/consoleApi/schedule/team/${teamId}`)
+          .pipe(
+            map(response => {
+              console.log(response)
+              const data = response.result.data || [];
+
+              const editedData = data.map(invitation => ({
+                ...invitation,
+                start: this.timeConverter(invitation.startHour, invitation.startMinute),
+                end: this.timeConverter(invitation.endHour, invitation.endMinute)
+              }));
+
+              return {
+                ...response,
+                result: {
+                  ...response.result,
+                  data: editedData
+                }
+              };
+            })
+          );
+      }
+
       timeConverter(hour: number, minute: number): string {
         const formattedHour = hour.toString().padStart(2, '0');
         const formattedMinute = minute.toString().padStart(2, '0');

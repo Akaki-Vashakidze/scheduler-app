@@ -1,25 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { InvitationsService } from '../../services/invitations.service';
-import { CalendarDay, Invitation, SelectedSchedule } from '../../../../interfaces/shared.interface';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatTabsModule } from '@angular/material/tabs';
-import { FormsModule } from '@angular/forms';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { RightNavContentType } from '../../../../enums/shared.enums';
+import { CalendarDay, Invitation, SelectedSchedule } from '../../../../interfaces/shared.interface';
+import { ScheduleService } from '../../../auth/services/schedule.service';
 import { SharedService } from '../../../auth/services/shared.service';
 import { SideNavsService } from '../../../auth/services/side-navs.service';
-import { ScheduleService } from '../../../auth/services/schedule.service';
-import { RightNavContentType } from '../../../../enums/shared.enums';
+import { InvitationsService } from '../../services/invitations.service';
 
 @Component({
-  selector: 'app-my-schedule',
-  imports: [CommonModule, TranslateModule, MatTabsModule, FormsModule, MatSlideToggleModule],
-  templateUrl: './my-schedule.component.html',
-  styleUrl: './my-schedule.component.scss'
+  selector: 'app-team-schedule',
+  imports: [CommonModule],
+  templateUrl: './team-schedule.component.html',
+  styleUrl: './team-schedule.component.scss'
 })
-export class MyScheduleComponent implements OnInit, OnDestroy {
+export class TeamScheduleComponent implements OnInit, OnDestroy {
+  userId!: string | null;
   daysArray: any[] = [];
   calendarDays!: CalendarDay[];
   userSchedule!: Invitation[];
@@ -31,19 +28,22 @@ export class MyScheduleComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private invitationsService: InvitationsService, private sharedService: SharedService, private sideNavService: SideNavsService, private scheduleService: ScheduleService) { }
 
   ngOnInit() {
-    this.subscriptions.push(
-      this.invitationsService.needToUpdateRecievedInvitations.subscribe(item => {
-        this.getUserSchedule()
-        this.selectedItems = []
-        this.sideNavService.closeRightSideNav()
-      })  
-    );
+    this.userId = this.route.snapshot.paramMap.get('id');
+    if (this.userId) {
+      this.subscriptions.push(
+        this.invitationsService.needToUpdateSentInvitations.subscribe(item => {
+          this.getUserSchedule()
+          this.selectedItems = []
+          this.sideNavService.closeRightSideNav()
+        })
+      );
+    }
   }
 
   getUserSchedule() {
-    this.scheduleService.getMySchedule().subscribe(item => {
+    this.scheduleService.getTeamSchedule(this.userId ?? '').subscribe(item => {
+      this.invitationsService.ContactAsInviteeId = this.userId || '';
       this.userSchedule = item.result.data || [];
-
       console.log(this.userSchedule)
       this.generateDays();
       this.calendarDays = this.mergeDaysWithEvents(this.daysArray, this.userSchedule);
@@ -82,7 +82,6 @@ export class MyScheduleComponent implements OnInit, OnDestroy {
           return e;
         }
       });
-
       return {
         ...day,
         events: matchedEvents,
@@ -249,7 +248,7 @@ export class MyScheduleComponent implements OnInit, OnDestroy {
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
       );
 
-      this.sharedService.setRightSideNavContent({invitations:this.selectedItems, forMe:true}, RightNavContentType.INVITATIONS);
+      this.sharedService.setRightSideNavContent({invitations:this.selectedItems, forMe:false}, RightNavContentType.INVITATIONS);
       this.sideNavService.openRightSideNav()
       this.startTimeOrEndTime = 'start';
       return;
@@ -280,7 +279,7 @@ export class MyScheduleComponent implements OnInit, OnDestroy {
     if (this.selectedItems.length == 0) {
       this.sideNavService.closeRightSideNav()
     }
-    this.sharedService.setRightSideNavContent({invitations:this.selectedItems, forMe:true}, RightNavContentType.INVITATIONS)
+    this.sharedService.setRightSideNavContent({invitations:this.selectedItems, forMe:false}, RightNavContentType.INVITATIONS)
   }
 
   compareTimes(a: string, b: string): number {
