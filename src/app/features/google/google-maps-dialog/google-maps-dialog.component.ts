@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GoogleMapsModule, GoogleMap } from '@angular/google-maps';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-google-maps-dialog',
@@ -18,12 +19,14 @@ export class GoogleMapsDialogComponent implements OnInit, AfterViewInit {
   zoom = 12;
   selectedPosition: google.maps.LatLngLiteral | null = null;
   shareableLink: string = '';
+  cordinates!: { lat: number, lng: number };
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(private cdr: ChangeDetectorRef, public dialogRef: MatDialogRef<GoogleMapsDialogComponent>) { }
 
   ngOnInit() {
     this.getCurrentLocation();
   }
+
   getCurrentLocation() {
     const options = {
       enableHighAccuracy: true, // This tells the browser to use GPS if available
@@ -94,8 +97,24 @@ export class GoogleMapsDialogComponent implements OnInit, AfterViewInit {
   }
 
   updateShareableLink(lat: number, lng: number) {
+    this.cordinates = { lat, lng }
     this.shareableLink = `https://www.google.com/maps?q=${lat},${lng}`;
     this.cdr.detectChanges();
+  }
+
+  saveCordinates() {
+    if (this.cordinates) {
+      console.log('Sending to parent:', this.cordinates);
+
+      // 3. Close the dialog and pass the object back
+      this.dialogRef.close(this.cordinates);
+    } else {
+      alert("Please select a location first!");
+    }
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 
   copyLink() {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ErrorBoxComponent } from '../error-box/error-box.component';
 import { Subject, takeUntil } from 'rxjs';
@@ -33,6 +33,7 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
     private invitationService: InvitationsService,
     private snackBarService: SnackbarService,
     private router: Router,
+    private cdr:ChangeDetectorRef,
     private dialog:MatDialog
   ) {
     this.checkIfTeamRoute();
@@ -102,14 +103,32 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
     const checked = (event.target as HTMLInputElement).checked;
     this.selectedSchedule[index].urgent = checked ? 1 : 0;
   }
-  onLocationChange(event: Event, index: number): void {
-    const value = (event.target as HTMLSelectElement).value;
-    if(value == 'map') {
-      this.openMapsDialog()
-    } else {
-      this.selectedSchedule[index].location = value;
-    }
+onLocationChange(event: Event, index: number, selectElement: HTMLSelectElement): void {
+  const value = (event.target as HTMLSelectElement).value;
+
+  if (value === 'map') {
+    const dialogRef = this.dialog.open(GoogleMapsDialogComponent, {
+      width: '800px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Save coordinates string
+        this.selectedSchedule[index].location = `${result.lat}/${result.lng}`;
+      } else {
+        // If they cancelled the map, reset to placeholder
+        this.selectedSchedule[index].location = "";
+      }
+      
+      // Reset the physical <select> so 'map' can be clicked again
+      selectElement.value = this.selectedSchedule[index].location;
+      this.cdr.detectChanges();
+    });
+  } else {
+    // Normal selection (Pool A, Gym, etc.)
+    this.selectedSchedule[index].location = value;
   }
+}
 
   submit(): void {
     this.errorText = '';
