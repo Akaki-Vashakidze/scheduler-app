@@ -10,6 +10,8 @@ import { InvitationsService } from '../../features/schedule/services/invitations
 import { SelectedSchedule } from '../../interfaces/shared.interface';
 import { RightNavContentType } from '../../enums/shared.enums';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { GoogleMapsDialogComponent } from '../../features/google/google-maps-dialog/google-maps-dialog.component';
 
 
 @Component({
@@ -30,7 +32,8 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
     private sideNavService: SideNavsService,
     private invitationService: InvitationsService,
     private snackBarService: SnackbarService,
-    private router: Router
+    private router: Router,
+    private dialog:MatDialog
   ) {
     this.checkIfTeamRoute();
     this.sharedService.rightSideNavChosenSchedulHelper$
@@ -57,6 +60,19 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
         });
       });
 
+  }
+
+  openMapsDialog() {
+    const dialogRef = this.dialog.open(GoogleMapsDialogComponent, {
+      width: '800px',
+      data: {
+        testData:'Hey test data'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog result:', result);
+    });
   }
 
   private checkIfTeamRoute(): void {
@@ -88,7 +104,11 @@ export class InvitationCreatorBoxComponent implements OnDestroy {
   }
   onLocationChange(event: Event, index: number): void {
     const value = (event.target as HTMLSelectElement).value;
-    this.selectedSchedule[index].location = value;
+    if(value == 'map') {
+      this.openMapsDialog()
+    } else {
+      this.selectedSchedule[index].location = value;
+    }
   }
 
   submit(): void {
