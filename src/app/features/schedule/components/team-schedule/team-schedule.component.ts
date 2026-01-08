@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { RightNavContentType } from '../../../../enums/shared.enums';
-import { CalendarDay, Invitation, SelectedSchedule } from '../../../../interfaces/shared.interface';
+import { CalendarDay, Invitation, SelectedSchedule, User } from '../../../../interfaces/shared.interface';
 import { ScheduleService } from '../../../auth/services/schedule.service';
 import { SharedService } from '../../../auth/services/shared.service';
 import { SideNavsService } from '../../../auth/services/side-navs.service';
@@ -24,6 +24,9 @@ export class TeamScheduleComponent implements OnInit, OnDestroy {
   startTimeOrEndTime: string = 'start';
   selectedItems: SelectedSchedule[] = [];
   subscriptions: Subscription[] = []
+  meetParticipants: User[] = [];
+  slotIndex!: number;
+  slotDay!: string;
 
   constructor(private route: ActivatedRoute, private invitationsService: InvitationsService, private sharedService: SharedService, private sideNavService: SideNavsService, private scheduleService: ScheduleService) { }
 
@@ -118,11 +121,20 @@ export class TeamScheduleComponent implements OnInit, OnDestroy {
     }));
   }
 
-  chooseTime(slot: any, nextSlot: any, day: any) {
+  chooseTime(slot: any, nextSlot: any, day: any, index:number) {
+    this.slotIndex = index;
+    this.slotDay = day.weekday;
+    if(slot.event) {
+      this.meetParticipants.length == 0 ? this.meetParticipants = slot.event.meetParticipants : this.meetParticipants = [];
+    }
+
     if (!nextSlot || slot.event || slot.selected) return;
+
+    this.meetParticipants = [];
 
     this.hideMiniSlotsEverywhere(day);
 
+    slot.showMiniSlots
     slot.showMiniSlots = true;
     slot.miniSlots = this.generate5MinIntervals(slot.time, nextSlot.time).map(t => ({
       time: t,

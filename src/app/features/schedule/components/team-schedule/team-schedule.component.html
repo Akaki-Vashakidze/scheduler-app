@@ -8,7 +8,7 @@
       <ng-container *ngFor="let slot of day.timeline; let i = index">
         <div
           class="slot"
-          (click)="chooseTime(slot, day.timeline[i+1], day)"
+          (click)="chooseTime(slot, day.timeline[i+1], day, (i + 1))"
           [ngClass]="{
             'event-slot': slot.event,
             'empty-slot': !slot.event && !slot.justEnded,
@@ -30,7 +30,12 @@
 
           <div *ngIf="slot.selected" class="padding6 cancel_time" (click)="cancelChosenSlots(day)">X</div>
         </div>
-
+        <div *ngIf="meetParticipants.length > 0 && (i + 1) == slotIndex && slotDay == day.weekday" class="membersParticipants">
+            <div>Participants</div>
+            <div class="participant" *ngFor="let participant of meetParticipants; let i = index;">
+                {{i + 1 + '. ' + participant.name + ' ' + participant.surname}}
+            </div>
+        </div>
         <div *ngIf="slot.showMiniSlots" class="mini-slots-container">
           <div
             *ngFor="let mini of slot.miniSlots"
