@@ -8,10 +8,11 @@ import { ScheduleService } from '../../../auth/services/schedule.service';
 import { SharedService } from '../../../auth/services/shared.service';
 import { SideNavsService } from '../../../auth/services/side-navs.service';
 import { InvitationsService } from '../../services/invitations.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-team-schedule',
-  imports: [CommonModule],
+  imports: [CommonModule, MatTooltipModule],
   templateUrl: './team-schedule.component.html',
   styleUrl: './team-schedule.component.scss'
 })

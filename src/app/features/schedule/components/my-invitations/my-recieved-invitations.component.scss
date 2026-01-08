@@ -1,5 +1,4 @@
 .invitations_container {
-    width: 1050px;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -10,7 +9,6 @@
 
 .invitation_item {
     width: 100%;
-    border: 1px solid var(--primary);
     border-radius: 15px;
     padding: 10px;
 }
@@ -25,7 +23,6 @@
 
 .invitation_details {
     margin: 10px 10px 0 10px;
-    border-bottom: 1px solid var(--primary);
 }
 
 .invitation_details_item {

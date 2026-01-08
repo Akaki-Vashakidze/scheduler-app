@@ -1,11 +1,12 @@
 .header_container {
-    background-color: var(--secondary);
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: fixed;
     z-index: 100;
     width: 100%;
+    height: 50px;
+    background-color: #fcfcfd;
 }
 
 .lang_select_cont {
@@ -22,7 +23,6 @@
 
 .users_list_item {
     padding: 5px;
-    border-bottom: 1px solid var(--primary);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -46,4 +46,8 @@
 .side_menu_toggle_button {
     cursor: pointer;
     padding: 5px 10px;
+    width: 40px;
+    height: 49px;
+    font-size: 40px;
+    margin: 0px 20px;
 }

@@ -9,7 +9,7 @@
 html,
 body {
   height: 100%;
-  background-color: #FFFCF9;
+  background-color: #fcfcfd;
 }
 
 body {
@@ -60,6 +60,8 @@ mat-icon {
   --neutral: #f7f7f7;
   --text: #1d3557;
 
+  --border-color:#dadce0;
+  --main-background:#fcfcfd;
   --light-blue-1: #00d2ff;
   --light-blue-2: #2edaff;
   --light-blue-3: #50e0ff;
@@ -163,4 +165,12 @@ input[type="checkbox"] {
 
 select {
   padding: 7px 10px;
+}
+
+.main_border {
+  border:1.5px solid var(--cm-sys-color-hairline, rgba(0, 0, 0, 0.12));
+}
+
+.main_bottom_border {
+  border-bottom:1.5px solid var(--cm-sys-color-hairline, rgba(0, 0, 0, 0.12));
 }

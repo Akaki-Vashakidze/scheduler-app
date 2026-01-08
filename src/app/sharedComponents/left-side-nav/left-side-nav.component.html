@@ -1,26 +1,16 @@
-<div class="side_nav_content">
+<div class="side_nav_content main_border">
     <div class="navigation">
-
-            <div *ngIf="user" class="menu_buttons" mat-menu-item routerLink="/mySchedule">
-                {{ 'my_schedule' | translate }}
+        <ng-container *ngIf="user">
+            <div *ngFor="let item of navItems" class="menu_buttons main_bottom_border" mat-menu-item
+                [routerLink]="item.route" routerLinkActive="activeNavigation"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="item.action?.()">
+                <div routerLinkActive="activeSquare" [routerLinkActiveOptions]="{ exact: true }"></div>
+                <div class="navigation-item">
+                    <mat-icon>{{ item.icon }}</mat-icon>
+                    <span>{{ item.label | translate }}</span>
+                </div>
             </div>
-
-            <div *ngIf="user" class="menu_buttons" mat-menu-item routerLink="/invitations">
-                {{ 'invitations' | translate }}
-            </div>
-
-            <div *ngIf="user" class="menu_buttons"  mat-menu-item routerLink="/teams">
-                {{ 'teams' | translate }}
-            </div>
-
-            <div *ngIf="user" class="menu_buttons"  mat-menu-item routerLink="/account">
-                {{ 'Account' | translate }}
-            </div>
-
-            <div *ngIf="user" class="menu_buttons" mat-menu-item (click)="logOut()">
-                {{ 'Log out' | translate }}
-            </div>
-
+        </ng-container>
     </div>
 
     <div class="recieved_contact_requests" *ngIf="user">
@@ -30,7 +20,7 @@
     <div class="sent_contact_requests" *ngIf="user">
         <app-recieved-contact-requests></app-recieved-contact-requests>
     </div>
-    
+
     <div class="my_contacts" *ngIf="user">
         <app-my-contacts-list></app-my-contacts-list>
     </div>

@@ -4,15 +4,14 @@
     flex-direction: column;
     gap: 20px;
     width: 300px;
-    background-color: var(--secondary);
     height: 100vh;
     z-index: 1000;
     right: 0px;
     top: 0px;
     z-index: 1;
-    padding-top: 50px;
-    border-left: 1px solid var(--primary);
     overflow: scroll;
+    top: 50px;
+    border-top: none !important;
 }
 
 .right_side_nav_content_header {

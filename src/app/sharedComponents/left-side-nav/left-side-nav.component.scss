@@ -4,31 +4,50 @@
     flex-direction: column;
     gap: 20px;  
     width: 300px;
-    background-color: var(--secondary);
     height: 100vh;
     z-index: 1000;
-    top: 0;
+    top: 50px;
     left: 0;
-    padding-top: 50px;
-    border-right: 1px solid var(--primary);
     z-index: 1;
     overflow: scroll;
+    border-top: none !important;
 }
 
 .navigation {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin-top: 30px;
 }
 
 .menu_buttons {
     width: 100%;
-    background-color: var(--light-blue-5);
-    padding: 5px 10px;
-    text-align: center;
+    text-align: left;
     opacity: 0.8;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.menu_buttons:hover:not(.activeNavigation) {
+  background-color: rgb(227, 227, 227);
+}
+
+.activeNavigation {
+    background-color: #d2dfff;
+}
+
+.activeSquare {
+    height: 100%;
+    width: 7px;
+    background-color: blue;
+    margin-right: -7px;
+}
+
+.navigation-item {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 12px 0px 12px 40px;
 }
 
 @media only screen and (max-width: 767px) {

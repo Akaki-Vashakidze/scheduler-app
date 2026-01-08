@@ -1,45 +1,113 @@
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy
+} from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { Router, RouterLink } from "@angular/router";
+import { MatIconModule } from '@angular/material/icon';
+import { Subject, takeUntil } from 'rxjs';
+
 import { AuthService } from '../../features/auth/services/auth.service';
 import { UserService } from '../../features/auth/services/user.service';
-import { CommonModule } from '@angular/common';
-import { Subject, takeUntil } from 'rxjs';
-import { SentContactRequestsComponent } from "../sentt-contact-requests/sent-contact-requests.component";
-import { RecievedContactRequestsComponent } from "../recieved-contact-requests/recieved-contact-requests.component";
-import { MyContactsListComponent } from "../my-contacts-list/my-contacts-list.component";
-import { MyTeamsSideNavComponent } from "../my-teams-side-nav/my-teams-side-nav.component";
+
+import { SentContactRequestsComponent } from '../sentt-contact-requests/sent-contact-requests.component';
+import { RecievedContactRequestsComponent } from '../recieved-contact-requests/recieved-contact-requests.component';
+import { MyContactsListComponent } from '../my-contacts-list/my-contacts-list.component';
+import { MyTeamsSideNavComponent } from '../my-teams-side-nav/my-teams-side-nav.component';
+
+interface NavItem {
+  label: string;
+  icon: string;
+  route?: string;
+  action?: () => void;
+}
 
 @Component({
   selector: 'app-left-side-nav',
-  imports: [TranslateModule, RouterLink, MyContactsListComponent, CommonModule, RecievedContactRequestsComponent, SentContactRequestsComponent, RecievedContactRequestsComponent, MyContactsListComponent, MyTeamsSideNavComponent],
+  standalone: true,
+  imports: [
+    CommonModule,
+    TranslateModule,
+    MatIconModule,
+    RouterModule,
+    SentContactRequestsComponent,
+    RecievedContactRequestsComponent,
+    MyContactsListComponent,
+    MyTeamsSideNavComponent
+  ],
   templateUrl: './left-side-nav.component.html',
   styleUrls: ['./left-side-nav.component.scss']
 })
 export class LeftSideNavComponent implements OnDestroy {
-  user!: any;
+
+  user: any = null;
+
   private destroy$ = new Subject<void>();
-  constructor(private authService: AuthService, private _router: Router, private userService: UserService, private cdr: ChangeDetectorRef) {
+
+  navItems: NavItem[] = [
+    {
+      label: 'my_schedule',
+      icon: 'event',
+      route: '/mySchedule'
+    },
+    {
+      label: 'invitations',
+      icon: 'mail',
+      route: '/invitations'
+    },
+    {
+      label: 'teams',
+      icon: 'groups',
+      route: '/teams'
+    },
+    {
+      label: 'Account',
+      icon: 'person',
+      route: '/account'
+    },
+    {
+      label: 'Log out',
+      icon: 'logout',
+      action: () => this.logOut()
+    }
+  ];
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private userService: UserService,
+    private cdr: ChangeDetectorRef
+  ) {
+    // Listen to user changes
     this.userService.user$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(item => {
-        this.user = item;
+      .subscribe(user => {
+        this.user = user;
+        this.cdr.markForCheck();
       });
   }
-  logOut() {
-    this.authService.logOut().subscribe((item: any) => {
-      if (item.result && item.result.data) {  
-        this.userService.setUser(null)
-        this.user = null;
-        localStorage.removeItem('schedule_user')
-        localStorage.removeItem('schedule_token')
-        this._router.navigate(['/login'])
-        this.cdr.detectChanges();
-      }
-    })
+
+  getLastRouteSegment(): string {
+    const segments = this.router.url.split('/').filter(Boolean);
+    return segments.length ? segments[segments.length - 1] : '';
   }
 
-  ngOnDestroy() {
+  logOut(): void {
+    this.authService.logOut()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res: any) => {
+        if (res?.result?.data) {
+          this.userService.setUser(null);
+          localStorage.removeItem('schedule_user');
+          localStorage.removeItem('schedule_token');
+          this.router.navigate(['/login']);
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }

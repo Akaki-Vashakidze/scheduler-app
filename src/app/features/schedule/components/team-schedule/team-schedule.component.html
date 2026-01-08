@@ -23,7 +23,10 @@
             (slot.selected ? '#90caf9' : '')
           "
         >
-          <span class="padding6">
+          <span class="padding6" 
+            [matTooltip]="slot.event?.meetParticipants?.length + (slot.event?.meetParticipants?.length == 1 ? ' participant' : ' participants')"
+            matTooltipPosition="above"
+            [matTooltipDisabled]="!slot.event">
             {{ slot.time }}
             <ng-container *ngIf="slot.event"> - {{ slot.event.title }}</ng-container>
           </span>
